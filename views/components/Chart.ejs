@@ -1,0 +1,63 @@
+<script src="/chart.min.js"></script>
+<% if (Number(data[0].close) !==Number(data[data.length-1].close)) { %>
+  <p class="text-center">
+    <%= companyName %> stock has gone <% if (data[data.length-1].close> data[0].close) { %>
+        <span style="color: red;">down <%= (((Math.abs(data[data.length-1].close -
+            data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %> days
+          <% } else if(data[data.length-1].close < data[0].close) { %>
+            <span style="color: green; font-weight: bold;">up <%= (((Math.abs(data[data.length-1].close -
+                data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %>
+              days
+              <% } %>
+  </p>
+  <% } %>
+
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <p class="text-secondary text-center" style="font-size: 14px;">Chart does not include today's price data until
+      afterhours. The most recent day added is <%= data[0].date %>.</p>
+
+
+
+
+
+    <script>
+      const dates = "<%= data.map(x => {return x.date}).reverse() %>";
+      const prices = "<%= data.map(x => {return x.close}).reverse()%>";
+      const startPrice = "<%= data[data.length-1].close %>"
+      const endPrice = "<%= data[0].close %>"
+
+      const ctx = document.getElementById("myChart").getContext("2d");
+      const myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: dates.split(","),
+          datasets: [{
+            data: prices.split(","),
+            fillColor: Number(startPrice) > Number(endPrice) ? 'red' : 'green',
+            borderColor: Number(startPrice) > Number(endPrice) ? 'red' : 'green',
+            borderWidth: 3,
+            fill: {
+              target: "origin",
+              above: Number(startPrice) > Number(endPrice) ? 'rgb(255, 0, 0, .5)' : 'rgb(0,128,0, .5)',
+            },
+          },],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: false,
+              display: true,
+            },
+            x: {
+              beginAtZero: true,
+              display: false,
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
+      });
+    </script>

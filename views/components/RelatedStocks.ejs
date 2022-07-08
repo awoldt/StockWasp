@@ -1,0 +1,41 @@
+<div class="mt-5 mb-5">
+  <h2>Related stocks</h2>
+
+  <% data.map(x => { %>
+
+  <a href="/stock/<%= x.ticker.toLowerCase() %>" style="text-decoration: none; color: black">
+    <div class="card m-2" style="display: inline-block; width: 300px; height: 180px" itemScope itemType="https://schema.org/Corporation">
+      <div class="card-body">
+        <% if (x.logo !== null) { %>
+        <img src="<%= x.logo %>" style="width: 45px; height: 45px" alt="<%= x.name %> logo" itemprop="logo" />
+        <% } %>
+        <div class="card-title">
+          <span itemProp="legalName"> <b><%= x.name %></b> </span>
+        </div>
+        <div class="card-subtitle text-muted">
+          <span itemProp="tickerSymbol"><%= x.ticker %></span> |
+          <span><%= x.exchange %></span>
+        </div>
+        <div class="card-text mt-3">
+          <span style="font-size: 20px">$<%=  String(x.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></span> <% if
+          (x.number_change < 0) { %>
+          <span style="float: right; color: red">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+            </svg>
+            <%= x.number_change %> (<%= x.percent_change %>%)</span>
+          <% } %> <% if (x.number_change > 0) { %>
+          <span style="float: right; color: green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+            </svg>
+            <%=  x.number_change %> (<%= x.percent_change %>%)</span>
+          <% } %> <% if (x.number_change == 0) { %>
+          <span style="float: right; color: black"><%= x.number_change %> (<%= x.percent_change %>%)</span>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <% }) %>
+</div>

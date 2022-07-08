@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color: #712cf9; padding: 20px">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" title="Homepage">
+      <%- include('./Logo.ejs') %>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <% if (current_page=='stock_page' ) { %>
+        <a class="nav-link active" aria-current="page" href="/stock" title="Check out market overview for today">Market Overview</a>
+        <a class="nav-link" href="/privacy" title="Privacy page">Privacy</a>
+        <% } else if(current_page=='privacy' ) { %>
+        <a class="nav-link" aria-current="page" href="/stock" title="Check out market overview for today">Market
+          Overview</a>
+        <a class="nav-link active" href="/privacy" title="Privacy page">Privacy</a>
+        <% } else if(current_page == 'other') { %>
+        <a class="nav-link" aria-current="page" href="/stock" title="Check out market overview for today">Market Overview</a>
+        <a class="nav-link" href="/privacy" title="Privacy page">Privacy</a>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</nav>

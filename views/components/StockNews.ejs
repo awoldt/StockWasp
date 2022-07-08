@@ -1,0 +1,27 @@
+<div class="mb-5">
+
+  <h2 style='display: inline-block; margin-bottom: 25px;'>
+    <%= companyName %> news
+  </h2>
+
+  <% data.map((x)=> { %>
+    <div itemScope itemType="https://schema.org/NewsArticle" style='margin-bottom: 20px;'>
+      <a href="<%=x.url %>" target="_blank" rel="noreferrer" style='text-decoration: none; max-width: 650px'
+        itemProp="url">
+        <span itemProp="headline">
+          <%= x.title %>
+        </span>
+        <span style='display: block;' class="mb-2">
+
+          <span style='color: black' class="text-secondary">
+            <span itemProp="author">
+              <%= x.site %>
+            </span> | <span itemprop="datePublished">
+              <%= x.publishedDate.split(' ')[0] %></span>
+      </span>
+
+    </span>
+  </a>
+</div>
+<% }) %>
+</div>

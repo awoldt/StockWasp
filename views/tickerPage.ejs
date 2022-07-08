@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= stock_data.companyProfile.name %> (<%= stock_data.companyProfile.symbol %>) Stock Price and 30 Day Chart
+  </title>
+  <meta name="description"
+    content="Get the latest <%= stock_data.companyProfile.name %> stock price and news along with 30 day chart to help make the best investment decisions" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://stockwasp.com/stock/<%= stock_data.companyProfile.symbol.toLowerCase() %>" />
+  <meta property="og:image" content="<%= stock_data.companyProfile.image %>" />
+  <meta property="og:site_name" content="StockWasp" />
+  <meta property="og:title" content="<%= stock_data.companyProfile.name %> Stock Price and 30 Day Chart" />
+  <meta property="og:description"
+    content="Discover <%= stock_data.companyProfile.name %>'s stock price today along with 30 day chart" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stockwasp.com/stock/<%= stock_data.companyProfile.symbol.toLowerCase() %>" />
+  <!-- Twitter Meta Tags. -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url"
+    content="https://stockwasp.com/stock/<%= stock_data.companyProfile.symbol.toLowerCase() %>" />
+  <meta name="twitter:title" content="<%= stock_data.companyProfile.name %> Stock Price and 30 Day Chart" />
+  <meta name="twitter:description"
+    content="Discover <%= stock_data.companyProfile.name %>'s stock price today along with 30 day chart" />
+  <meta name="twitter:image" content="<%= stock_data.companyProfile.image %>" />
+
+  <link rel="stylesheet" href="/bootstrap.min.css" />
+  <script src="/bootstrap.min.js"></script>
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <style>
+    .nav-link {
+      color: white
+    }
+  </style>
+  <%- include('./components/googleAnalytics.ejs') %>
+</head>
+
+<body>
+  <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
+    <div class="container mt-5">
+      <div id="recent_stocks" class="mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="16" height="16" fill="currentColor"
+          class="bi bi-clock-history" viewBox="0 0 16 16">
+          <path
+            d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
+          <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
+          <path
+            d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
+        </svg>
+      </div>
+      <script>
+        const recentStocksDiv = document.getElementById("recent_stocks");
+
+        if (sessionStorage.length !== 0) {
+          let recent_stocks = sessionStorage.getItem("stocks_viewed");
+          let s = recent_stocks.split(",");
+          s.forEach((stock) => {
+            let btn = document.createElement("div");
+            btn.setAttribute("class", "btn btn-link");
+            btn.style.textDecoration = "none";
+            btn.style.marginRight = "10px";
+            btn.style.borderRadius = "25px";
+            btn.style.border = "1px solid black";
+            let link = document.createElement("a");
+            link.style.color = "blue";
+            link.style.textDecoration = "none";
+            link.setAttribute("href", "/stock/" + stock.toLowerCase());
+            link.innerText = stock;
+            btn.appendChild(link);
+            recentStocksDiv.appendChild(btn);
+          });
+
+          if (
+            recent_stocks
+              .split(",")
+              .indexOf("<%= stock_data.companyProfile.symbol %>") == -1
+          ) {
+            recent_stocks += ",<%= stock_data.companyProfile.symbol %>";
+            sessionStorage.setItem("stocks_viewed", recent_stocks);
+          }
+        } else {
+          recentStocksDiv.style.visibility = "hidden";
+          sessionStorage.setItem(
+            "stocks_viewed",
+            "<%= stock_data.companyProfile.symbol %>"
+          );
+        }
+      </script>
+      <%- include('./components/Search.ejs') %>
+        <% if (stock_data !==null && stock_data.companyProfile !==null) { %>
+          <div itemScope itemType="https://schema.org/Corporation">
+            <div class="row">
+              <!--stock price and company profile-->
+              <div class="col col-lg-4">
+                <% if (stock_data.companyProfile.image !==null) { %>
+                  <img itemprop="logo" src="<%= stock_data.companyProfile.image %>"
+                    alt="<%= stock_data.companyProfile.name %> logo" class="img-fluid" />
+                  <% } %>
+
+                    <h1 itemProp="legalName">
+                      <%= stock_data.companyProfile.name %>
+                    </h1>
+
+                    <span class="text-secondary">
+                      <span itemProp="tickerSymbol">
+                        <%=stock_data.companyProfile.symbol %>
+                      </span>
+                      | <%=stock_data.companyProfile.exchange %>
+                    </span>
+
+                    <div>
+                      <div>
+                        <div style="margin-bottom: 25px">
+
+                          <span>
+                            <% if (stock_data.isStockMarketOpen) { %> Market is open <% } else { %> Market is closed <%
+                                  } %>
+                          </span>
+                          <% if (stock_data.companyProfile.price !==null) { %>
+                            <span style="font-size: 30px; display: block">$<%=
+                                String(stock_data.companyProfile.price).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%>
+                                <span style="font-size: 20px">
+                                  <%- include('./components/GainLoss.ejs', {data: stock_data}) %>
+                                </span>
+                            </span>
+                            <% var today=new Date(); var dd=String(today.getDate()).padStart(2, '0' ); var
+                              mm=String(today.getMonth() + 1).padStart(2, '0' ); //January is 0! var
+                              yyyy=today.getFullYear(); today=mm + '/' + dd + '/' + yyyy; %>
+
+                              <span style="display: block; font-size: 14px" class="text-secondary">stock price as of <%=
+                                  today %></span>
+
+                              <% } %>
+                        </div>
+
+                        <% if (stock_data.companyProfile !==null) { %>
+                          <%- include('./components/CompanyProfile.ejs', {company: stock_data.companyProfile,
+                            coreCompanyInfo: stock_data.companyCoreInfo, key_people: stock_data.importantPeople}) %>
+                            <% } %>
+                      </div>
+                    </div>
+              </div>
+
+              <div class="col col-lg-8" style="margin-top: 100px">
+                <% if (stock_data.historicalPrices !==null && stock_data.companyProfile.name !==null) { %>
+                  <%- include('./components/Chart.ejs', {data: stock_data.historicalPrices, companyName:
+                    stock_data.companyProfile.name}) %>
+                    <% } %>
+              </div>
+            </div>
+
+            <% if (stock_data.relatedStocks !==null) { %>
+              <hr>
+              <%- include('./components/RelatedStocks.ejs', {data: stock_data.relatedStocks}) %>
+                <% } %>
+                  <% if (stock_data.stockNews !==null && stock_data.companyProfile.name !==null &&
+                    stock_data.stockNews.length !==0) { %>
+                    <hr>
+                    <%- include('./components/StockNews.ejs', {data: stock_data.stockNews, companyName:
+                      stock_data.companyProfile.name}) %>
+                      <% } %>
+          </div>
+          <% } %>
+            <footer>
+              <p class="text-secondary mt-5" style="font-size: 14px">
+                Data provided by
+                <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation"
+                  href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial
+                  Modeling Prep
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit"
+                    class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                    <path fill-rule="evenodd"
+                      d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                  </svg></a><br>This site is not intended for financial advice. Invest at your
+                own risk.
+              </p>
+              <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">All trademarks, logos, and brand
+                names are the property of their respective owners. All company, product and service names used in this
+                website
+                are for identification and informational purposes only. Use of these names, trademarks, and brands does not imply
+                endorsement.</p>
+            </footer>
+    </div>
+</body>
+
+</html>

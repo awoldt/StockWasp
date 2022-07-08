@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market Overview | StockWasp</title>
+  <link rel="stylesheet" href="/bootstrap.min.css" />
+  <script src="/bootstrap.min.js"></script>
+  <script src="/splide.min.js"></script>
+  <link rel="stylesheet" href="/splide.min.css" />
+  <style>
+    .splide__pagination__page {
+      visibility: hidden;
+    }
+    .nav-link {
+      color: white
+    }
+  </style>
+ 
+
+  <meta name="description"
+    content="Discover the hottest stocks on the market along with the trading day's biggest gainers and losers" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://stockwasp.com/stock" />
+  <meta property="og:image" content="https://stockwasp.com/opengraph_logo.svg" />
+  <meta property="og:site_name" content="StockWasp" />
+  <meta property="og:title" content="Stock Market Today | StockWasp" />
+  <meta property="og:description"
+    content="Discover market trends and the most popular stocks people are talking about" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stockwasp.com/stock" />
+  <!-- Twitter Meta Tags. -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://stockwasp.com/stock" />
+  <meta name="twitter:title" content="Market Overview | StockWasp" />
+  <meta name="twitter:description"
+    content="Discover market trends and the most popular stocks people are talking about" />
+  <meta name="twitter:image" content="https://stockwasp.com/opengraph_logo.svg" />
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <%- include('./components/googleAnalytics.ejs') %>
+</head>
+
+<body>
+  <%- include('./components/Nav.ejs', {current_page: 'stock_page' }) %>
+    <div class="container pt-5">
+      <%- include('./components/Search.ejs') %>
+
+
+
+
+      <div class="splide mt-3" role="group" aria-label="Splide Basic HTML Example"
+        style="padding: 10px; margin-bottom: 25px">
+        <div class="splide__track">
+          <ul class="splide__list">
+            <% stock_data.mostActive.map(x=> { %>
+              <li class="splide__slide text-center" style="margin-bottom: 250px;">
+                <div style="height: 100px; width: 100px;" class="mx-auto" itemScope
+                  itemType="https://schema.org/Corporation">
+                  <span style="display: block; margin-bottom: 25px;">Volume: <%=
+                      String(x.volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span>
+                  <a href="/stock/<%= x.symbol.toLowerCase() %>" style="text-decoration: none">
+                    <img src="<%= x.image %>" alt="<%= x.companyName %> logo" height="250" width="250"
+                      class="img-fluid mb-2" itemprop="logo" />
+                    <span style="display: block" itemprop="legalName">
+                      <%= x.companyName %>
+                    </span>
+                    <span class="text-secondary" itemprop="tickerSymbol">
+                      <%= x.symbol %>
+                    </span>
+
+                    <% if (x.changes < 0) { %>
+                      <span style="color: red; display: block">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-arrow-down" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd"
+                            d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                        </svg> $<%= x.changes.toFixed(2) %>
+                      </span>
+                      <% } else if(x.changes> 0) { %>
+                        <span style="color: green; display: block">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                              d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+                          </svg> $<%= x.changes.toFixed(2) %>
+                        </span>
+                        <% } else { %>
+                          <span style="display: block"><i>Price has not changed today</i></span>
+                          <% }%>
+                  </a>
+
+                </div>
+
+              </li>
+              <% }) %>
+          </ul>
+        </div>
+      </div>
+      <p class="text-secondary text-center mb-5" style="margin-top: -75px;">Showing the <%= stock_data.mostActive.length
+          %> most popular stocks on the market today</p>
+      <p class="text-center mx-auto" style="max-width: 850px;"><strong>
+          <%= stock_data.mostActive[0].companyName %>
+        </strong>is the most traded stock today, with an average volume of <%=
+          String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>. <strong>
+            <%= stock_data.mostActive[1].companyName %>
+          </strong> and <strong>
+            <%= stock_data.mostActive[2].companyName %>
+          </strong> are not far behind,
+          with average trading volumes of <%=
+            String(stock_data.mostActive[1].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%> and <%=
+              String(stock_data.mostActive[2].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%>, respectively.
+      </p>
+
+      <script>
+        let splide;
+
+
+        window.onload = () => {
+          if (window.innerWidth >= 992) {
+            splide = new Splide(".splide", {
+              type: "loop",
+              perPage: 4,
+              perMove: 1,
+            });
+
+            splide.mount();
+          } else if (window.innerWidth >= 768) {
+            splide = new Splide(".splide", {
+              type: "loop",
+              perPage: 3,
+              perMove: 1,
+            });
+
+            splide.mount();
+          } else {
+            splide = new Splide(".splide", {
+              type: "loop",
+              perPage: 1,
+              perMove: 1,
+            });
+
+            splide.mount();
+          }
+        }
+
+        window.onresize = () => {
+          if (window.innerWidth >= 992) {
+            splide = new Splide(".splide", {
+              type: "loop",
+              perPage: 4,
+              perMove: 1,
+            });
+
+            splide.mount();
+          } else if (window.innerWidth >= 768) {
+            splide = new Splide(".splide", {
+              type: "loop",
+              perPage: 3,
+              perMove: 1,
+            });
+
+            splide.mount();
+          } else {
+            splide = new Splide(".splide", {
+              type: "loop",
+              perPage: 1,
+              perMove: 1,
+            });
+
+            splide.mount();
+          }
+        }
+      </script>
+
+      <hr>
+
+      <div class="row mb-5  text-center">
+        <div class="col-lg-6 mt-5">
+          <div class="mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+              class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+            </svg>
+            <h2 style="display: inline">Today's Winners</h2>
+          </div>
+
+          <% stock_data.gainLoss.gainers.map(x=> { %>
+            <div itemScope itemType="https://schema.org/Corporation">
+              <a href="/stock/<%= x.symbol.toLowerCase() %>" title="View <%= x.symbol %> stock price and news"
+                style="text-decoration: none">
+                <span itemprop="legalName">
+                  <%= x.name %>
+                </span>(<span itemprop="tickerSymbol">
+                  <%= x.symbol %>
+                </span>)
+              </a>
+              <span style="color: green; margin-left: 10px">+<%= x.change.toFixed(2) %> (<%=
+                    x.changesPercentage.toFixed(2) %>%)</span>
+            </div>
+            <% }) %>
+        </div>
+        <div class="col-lg-6 mt-5">
+          <div class="mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+              class="bi bi-graph-down-arrow" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0V0Zm10 11.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-1 0v2.6l-3.613-4.417a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61L13.445 11H10.5a.5.5 0 0 0-.5.5Z" />
+            </svg>
+            <h2 style="display: inline">Today's Losers</h2>
+          </div>
+
+          <% stock_data.gainLoss.losers.map(x=> { %>
+            <div itemScope itemType="https://schema.org/Corporation">
+              <a href="/stock/<%= x.symbol.toLowerCase() %>" title="View <%= x.symbol %> stock price and news"
+                style="text-decoration: none">
+                <span itemprop="legalName">
+                  <%= x.name %>
+                </span>(<span itemprop="tickerSymbol">
+                  <%= x.symbol %>
+                </span>)
+              </a>
+              <span style="color: red; margin-left: 10px">
+                <%= x.change.toFixed(2) %> (<%= x.changesPercentage.toFixed(2) %>%)
+              </span>
+            </div>
+            <% }) %>
+        </div>
+      </div>
+      <footer>
+        <p class="text-secondary mt-5" style="font-size: 14px">
+          Data provided by
+          <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation"
+            href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial
+            Modeling Prep
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit"
+              class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+              <path fill-rule="evenodd"
+                d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+            </svg></a><br />This site is not intended for financial advice. Invest at your
+          own risk.
+        </p>
+        <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">All trademarks, logos, and brand
+          names are the property of their respective owners. All company, product and service names used in this website
+          are for identification and informational purposes only. Use of these names, trademarks, and brands does not imply endorsement.</p>
+      </footer>
+
+    </div>
+</body>
+
+</html>
