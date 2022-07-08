@@ -64,7 +64,7 @@
               <li class="splide__slide text-center" style="margin-bottom: 250px;">
                 <div style="height: 100px; width: 100px;" class="mx-auto" itemScope
                   itemType="https://schema.org/Corporation">
-                  <span style="display: block; margin-bottom: 25px;">Volume: <%=
+                  <span style="display: block; margin-bottom: 25px;">Avg Volume: <%=
                       String(x.volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span>
                   <a href="/stock/<%= x.symbol.toLowerCase() %>" style="text-decoration: none">
                     <img src="<%= x.image %>" alt="<%= x.companyName %> logo" height="250" width="250"
@@ -104,12 +104,12 @@
           </ul>
         </div>
       </div>
-      <p class="text-secondary text-center mb-5" style="margin-top: -75px;">Showing the <%= stock_data.mostActive.length
-          %> most popular stocks on the market today</p>
+      <p class="text-secondary text-center mb-5" style="margin-top: -75px;">Showing <%= stock_data.mostActive.length
+          %> of the most active stocks on the market</p>
       <p class="text-center mx-auto" style="max-width: 850px;"><strong>
           <%= stock_data.mostActive[0].companyName %>
-        </strong>is the most traded stock today, with an average volume of <%=
-          String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>. <strong>
+        </strong> has the highest average volume of any stock with <%=
+          String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %> shares traded. <strong>
             <%= stock_data.mostActive[1].companyName %>
           </strong> and <strong>
             <%= stock_data.mostActive[2].companyName %>

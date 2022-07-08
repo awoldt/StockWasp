@@ -1,6 +1,7 @@
 import company_profile from "./company_profile";
 import related_stock from "./related_stocks";
 import stock_news from "./stock_news";
+import company_quote from './company_quote'
 
 interface historical_data {
   date: string | null;
@@ -19,6 +20,7 @@ interface imporant_people {
 
 export default interface ALL_DATA {
   companyProfile: company_profile | null;
+  companyQuote: company_quote | null,
   historicalPrices: historical_data[] | null;
   relatedStocks: related_stock[] | null;
   stockNews: stock_news[] | null;
