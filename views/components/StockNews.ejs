@@ -4,24 +4,33 @@
     <%= companyName %> news
   </h2>
 
-  <% data.map((x)=> { %>
-    <div itemScope itemType="https://schema.org/NewsArticle" style='margin-bottom: 20px;'>
-      <a href="<%=x.url %>" target="_blank" rel="noreferrer" style='text-decoration: none; max-width: 650px'
-        itemProp="url">
-        <span itemProp="headline">
-          <%= x.title %>
-        </span>
-        <span style='display: block;' class="mb-2">
+  <div class="row mx-auto">
+    <% data.map((x)=> { %>
+      <div itemScope itemType="https://schema.org/NewsArticle" style='margin-bottom: 20px;' class="col">
 
-          <span style='color: black' class="text-secondary">
-            <span itemProp="author">
-              <%= x.site %>
-            </span> | <span itemprop="datePublished">
-              <%= x.publishedDate.split(' ')[0] %></span>
-      </span>
 
-    </span>
-  </a>
-</div>
-<% }) %>
+        <div class="card" style="width: 18rem;">
+          <img src="<%= x.image %>" class="card-img-top img-fluid" alt="<%= x.site %> article image" itemprop="image">
+          <div class="card-body">
+            <h5 class="card-title" itemprop="headline">
+              <%= x.title %>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted" itemprop="datePublished">
+              <%= x.publishedDate.split(' ')[0]%></h6>
+            <p class="card-text">
+              <%= x.text.slice(0,100)  %>
+            </p>
+            <a href="<%= x.url %>" class="btn btn-primary" target="_blank" role="noreferrer" title="Read more on <%= companyName %> on <%= x.site %>" itemprop="url">Read more on <%= x.site %></a>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+      <% }) %>
+  </div>
+
 </div>
