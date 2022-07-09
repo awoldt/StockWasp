@@ -1,11 +1,6 @@
 <div class="row justify-content-center">
-  <input
-    class="form-control"
-    style="max-width: 300px"
-    type="search"
-    placeholder="🔍 Search any stock"
-    id="search_query"
-  />
+  <input class="form-control" style="max-width: 300px" type="search" placeholder="🔍 Search any stock"
+    id="search_query" />
 </div>
 
 <div class="row justify-content-center">
@@ -55,7 +50,26 @@
       }
     }
 
-    const processChange = debounce(() => search(searchBar.value));
+    const processChange = debounce(() => {
+
+     
+      if (searchBar.value == "") {
+
+        searchResults.innerHTML = "";
+
+      }
+      else {
+      
+        if (searchResults.innerText !== "") {
+          searchResults.innerHTML = "";
+          search(searchBar.value);
+        } else {
+          search(searchBar.value);
+        }
+      }
+
+
+    });
 
     searchBar.addEventListener("keyup", processChange);
   </script>

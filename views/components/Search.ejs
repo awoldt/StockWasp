@@ -1,10 +1,5 @@
-<input
-  class="form-control"
-  style="max-width: 300px"
-  type="search"
-  placeholder="🔍 Search any stock"
-  id="search_query"
-/>
+<input class="form-control" style="max-width: 300px" type="search" placeholder="🔍 Search any stock"
+  id="search_query" />
 <ul class="list-group mb-5" id="search_results" style="max-width: 300px"></ul>
 
 <script>
@@ -51,7 +46,27 @@
     }
   }
 
-  const processChange = debounce(() => search(searchBar.value));
+  const processChange = debounce(() => {
+
+   
+    if (searchBar.value == "") {
+   
+
+      searchResults.innerHTML = "";
+
+    }
+    else {
+     
+      if (searchResults.innerText !== "") {
+        searchResults.innerHTML = "";
+        search(searchBar.value);
+      } else {
+        search(searchBar.value);
+      }
+    }
+
+
+  });
 
   searchBar.addEventListener("keyup", processChange);
 </script>
