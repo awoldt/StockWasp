@@ -67,7 +67,7 @@
                     itemType="https://schema.org/Corporation">
                     <span style="display: block; margin-bottom: 25px;">Avg Volume: <%=
                         String(x.volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span>
-                    <a href="/stock/<%= x.symbol.toLowerCase() %>" style="text-decoration: none">
+                    <a href="/stock/<%= x.symbol.toLowerCase() %>" style="text-decoration: none" itemprop="url">
                       <img src="<%= x.image %>" alt="<%= x.companyName %> logo" height="250" width="250"
                         class="img-fluid mb-2" itemprop="logo" />
                       <span style="display: block" itemprop="legalName">
@@ -197,10 +197,10 @@
 
             <ul class="list-group">
               <% stock_data.gainLoss.gainers.map(x=> { %>
-                <li class="list-group-item">
+                <li class="list-group-item" style="background-color: 	rgb(0,128,0, .1);">
                   <div itemScope itemType="https://schema.org/Corporation">
                     <a href="/stock/<%= x.symbol.toLowerCase() %>" title="View <%= x.symbol %> stock price and news"
-                      style="text-decoration: none">
+                      style="text-decoration: none" itemprop="url">
                       <span itemprop="legalName">
                         <%= x.name %>
                       </span>(<span itemprop="tickerSymbol">
@@ -233,10 +233,10 @@
             <ul class="list-group">
 
               <% stock_data.gainLoss.losers.map(x=> { %>
-                <li class="list-group-item">
+                <li class="list-group-item" style="background-color: rgb(255, 0, 0, .1);">
                   <div itemScope itemType="https://schema.org/Corporation">
                     <a href="/stock/<%= x.symbol.toLowerCase() %>" title="View <%= x.symbol %> stock price and news"
-                      style="text-decoration: none">
+                      style="text-decoration: none" itemprop="url">
                       <span itemprop="legalName">
                         <%= x.name %>
                       </span>(<span itemprop="tickerSymbol">

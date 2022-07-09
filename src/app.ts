@@ -66,7 +66,6 @@ app.get("/stock/:ticker", async (req, res) => {
       });
     }
   } catch (e) {
-    console.log("ticker " + req.params.ticker + " does not exist");
     res.status(404).send("stock does not exist :(");
   }
 });

@@ -31,6 +31,9 @@
       if (day !== 'Saturday' && day !== 'Sunday') {
         document.getElementById("chart_statement").innerText = "Chart does not include today's price data until afterhours. The most recent day added is <%= data[0].date %>."
       }
+      else {
+        document.getElementById("chart_statement").remove();
+      }
     </script>
 
 
