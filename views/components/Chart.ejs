@@ -13,10 +13,25 @@
   <% } %>
 
     <canvas id="myChart" width="400" height="200"></canvas>
-    <p class="text-secondary text-center" style="font-size: 14px;">Chart does not include today's price data until
-      afterhours. The most recent day added is <%= data[0].date %>.</p>
 
 
+
+
+
+
+    <p class="text-secondary text-center" style="font-size: 14px;" id="chart_statement"></p>
+
+
+
+    <script>
+      const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const d = new Date();
+      let day = weekday[d.getDay()];
+
+      if (day !== 'Saturday' && day !== 'Sunday') {
+        document.getElementById("chart_statement").innerText = "Chart does not include today's price data until afterhours. The most recent day added is <%= data[0].date %>."
+      }
+    </script>
 
 
 
