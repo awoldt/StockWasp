@@ -43,10 +43,6 @@ app.get("/stock", async (req, res) => {
 });
 
 app.get("/stock/:ticker", async (req, res) => {
-
-
-  
-
   try {
     let x = await axios.get(
       process.env.STOCKS_CLOUD_FUNCTION_ENPOINT +
@@ -56,9 +52,6 @@ app.get("/stock/:ticker", async (req, res) => {
         process.env.CLOUD_FUNCTION_SECRET_KEY
     );
     const StockData: ALL_DATA | null = x.data;
-
-      console.log(StockData);
-
 
     //if stock data or companyprofile are null, 404
     //only need companyProfile to send back data

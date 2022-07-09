@@ -12,11 +12,11 @@
         <div class="card" style="width: 18rem;">
           <img src="<%= x.image %>" class="card-img-top img-fluid" alt="<%= x.site %> article image" itemprop="image">
           <div class="card-body">
-            <h5 class="card-title" itemprop="headline">
+            <h3 class="card-title" itemprop="headline" style="font-size: 20px;">
               <%= x.title %>
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted" itemprop="datePublished">
-              <%= x.publishedDate.split(' ')[0]%></h6>
+            </h3>
+            <div class="card-subtitle mb-2 text-muted" itemprop="datePublished" >
+              <%= x.publishedDate.split(' ')[0]%></div>
             <p class="card-text">
               <%= x.text.slice(0,100)  %>
             </p>
