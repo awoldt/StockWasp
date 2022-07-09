@@ -60,41 +60,63 @@
       </div>
       <script>
         const recentStocksDiv = document.getElementById("recent_stocks");
+        try {
 
-        if (sessionStorage.length !== 0) {
-          let recent_stocks = sessionStorage.getItem("stocks_viewed");
-          let s = recent_stocks.split(",");
-          s.forEach((stock) => {
-            let btn = document.createElement("div");
-            btn.setAttribute("class", "btn btn-link");
-            btn.style.textDecoration = "none";
-            btn.style.marginRight = "10px";
-            btn.style.borderRadius = "25px";
-            btn.style.border = "1px solid black";
-            let link = document.createElement("a");
-            link.style.color = "blue";
-            link.style.textDecoration = "none";
-            link.setAttribute("href", "/stock/" + stock.toLowerCase());
-            link.innerText = stock;
-            btn.appendChild(link);
-            recentStocksDiv.appendChild(btn);
-          });
 
-          if (
-            recent_stocks
-              .split(",")
-              .indexOf("<%= stock_data.companyProfile.symbol %>") == -1
-          ) {
-            recent_stocks += ",<%= stock_data.companyProfile.symbol %>";
-            sessionStorage.setItem("stocks_viewed", recent_stocks);
+          if (sessionStorage.length !== 0) {
+
+            if (Date.now() - sessionStorage.getItem("start_time") > 3600000) {
+              sessionStorage.clear();
+              recentStocksDiv.style.visibility = "hidden";
+            }
+            else {
+              let recent_stocks = sessionStorage.getItem("stocks_viewed");
+              let s = recent_stocks.split(",");
+              s.forEach((stock) => {
+                let btn = document.createElement("div");
+                btn.setAttribute("class", "btn btn-link");
+                btn.style.textDecoration = "none";
+                btn.style.marginRight = "10px";
+                btn.style.borderRadius = "25px";
+                btn.style.border = "1px solid black";
+                let link = document.createElement("a");
+                link.style.color = "blue";
+                link.style.textDecoration = "none";
+                link.setAttribute("href", "/stock/" + stock.toLowerCase());
+                link.innerText = stock;
+                btn.appendChild(link);
+                recentStocksDiv.appendChild(btn);
+              });
+
+              if (
+                recent_stocks
+                  .split(",")
+                  .indexOf("<%= stock_data.companyProfile.symbol %>") == -1
+              ) {
+                recent_stocks += ",<%= stock_data.companyProfile.symbol %>";
+                sessionStorage.setItem("stocks_viewed", recent_stocks);
+              }
+            }
+
+
+
+
+          } else {
+
+            sessionStorage.setItem('start_time', Date.now());
+
+            recentStocksDiv.style.visibility = "hidden";
+            sessionStorage.setItem(
+              "stocks_viewed",
+              "<%= stock_data.companyProfile.symbol %>"
+            );
           }
-        } else {
-          recentStocksDiv.style.visibility = "hidden";
-          sessionStorage.setItem(
-            "stocks_viewed",
-            "<%= stock_data.companyProfile.symbol %>"
-          );
         }
+        catch (e) {
+          console.log('error updating sessionStorage');
+        }
+
+
       </script>
       <%- include('./components/Search.ejs') %>
         <% if (stock_data !==null && stock_data.companyProfile !==null) { %>
