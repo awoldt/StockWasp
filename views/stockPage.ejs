@@ -54,7 +54,18 @@
     <div class="container pt-5">
       <%- include('./components/Search.ejs') %>
 
-
+        <p class="text-center mx-auto" style="max-width: 850px; margin-bottom: 50px;"><strong>
+            <%= stock_data.mostActive[0].companyName %>
+          </strong> has the highest average volume of any stock with <%=
+            String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %> shares traded. <strong>
+              <%= stock_data.mostActive[1].companyName %>
+            </strong> and <strong>
+              <%= stock_data.mostActive[2].companyName %>
+            </strong> are not far behind,
+            with average trading volumes of <%=
+              String(stock_data.mostActive[1].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%> and <%=
+                String(stock_data.mostActive[2].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%>, respectively.
+        </p>
 
 
         <div class="splide mt-3" role="group" aria-label="Splide Basic HTML Example"
@@ -105,20 +116,9 @@
             </ul>
           </div>
         </div>
-        <p class="text-secondary text-center mb-5" style="margin-top: -75px;">Showing <%= stock_data.mostActive.length
+        <p class="text-secondary text-center mb-5" style="margin-top: 25px;">Showing <%= stock_data.mostActive.length
             %> of the most active stocks on the market</p>
-        <p class="text-center mx-auto" style="max-width: 850px;"><strong>
-            <%= stock_data.mostActive[0].companyName %>
-          </strong> has the highest average volume of any stock with <%=
-            String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %> shares traded. <strong>
-              <%= stock_data.mostActive[1].companyName %>
-            </strong> and <strong>
-              <%= stock_data.mostActive[2].companyName %>
-            </strong> are not far behind,
-            with average trading volumes of <%=
-              String(stock_data.mostActive[1].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%> and <%=
-                String(stock_data.mostActive[2].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," )%>, respectively.
-        </p>
+
 
         <script>
           let splide;

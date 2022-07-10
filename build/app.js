@@ -27,9 +27,12 @@ app.listen(8080, () => {
 app.get("/", (req, res) => {
     res.render("homepage");
 });
+// GET /STOCK
 app.get("/stock", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const data = yield axios_1.default.get(String(process.env.STOCK_PAGE_CLOUD_FUNCTION_ENDPOINT));
+        const data = yield axios_1.default.get(process.env.STOCK_PAGE_CLOUD_FUNCTION_ENDPOINT +
+            "?key=" +
+            process.env.CLOUD_FUNCTION_SECRET_KEY);
         res.status(200).render("stockPage", {
             stock_data: data.data,
         });
@@ -61,7 +64,12 @@ app.get("/stock/:ticker", (req, res) => __awaiter(void 0, void 0, void 0, functi
         }
     }
     catch (e) {
-        console.log("ticker " + req.params.ticker + " does not exist");
         res.status(404).send("stock does not exist :(");
     }
 }));
+app.get("/privacy", (req, res) => {
+    res.status(200).render("privacy");
+});
+app.get("/sitemap.xml", (req, res) => {
+    res.status(200).sendFile(path_1.default.join(__dirname, "..", "/sitemap.xml"));
+});
