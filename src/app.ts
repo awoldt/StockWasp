@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
   res.render("homepage");
 });
 
-// GET /STOCK
 app.get("/stock", async (req, res) => {
   try {
     const data = await axios.get(
@@ -67,6 +66,27 @@ app.get("/stock/:ticker", async (req, res) => {
     }
   } catch (e) {
     res.status(404).send("stock does not exist :(");
+  }
+});
+
+app.get("/random", async (req, res) => {
+
+  try {
+    const data = await axios.get(
+      "https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
+        req.query.sector +
+        "&limit=500&apikey=" +
+        process.env.STOCK_API_KEY
+    );
+    res.redirect(
+      "/stock/" +
+        data.data[
+          Math.floor(Math.random() * data.data.length)
+        ].symbol.toLowerCase()
+    );
+  } catch (e) {
+    console.log("error fetching random stock by sector :(");
+    res.redirect("/stock");
   }
 });
 
