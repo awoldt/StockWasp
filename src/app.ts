@@ -7,8 +7,12 @@ import axios from "axios";
 import ALL_DATA from "./interfaces/ALL_DATA";
 import getMarketOverviewData from "./functions/getMarketOverviewData";
 import getTickerPageData from "./functions/getTickerPageData";
+import compression from "compression";
 
 app.set("view engine", "ejs");
+
+// Compress all HTTP responses
+app.use(compression());
 
 app.use(
   express.static(path.join(__dirname, "..", "/node_modules/bootstrap/dist/css"))

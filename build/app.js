@@ -17,6 +17,8 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const path_1 = __importDefault(require("path"));
 const axios_1 = __importDefault(require("axios"));
+const getMarketOverviewData_1 = __importDefault(require("./functions/getMarketOverviewData"));
+const getTickerPageData_1 = __importDefault(require("./functions/getTickerPageData"));
 app.set("view engine", "ejs");
 app.use(express_1.default.static(path_1.default.join(__dirname, "..", "/node_modules/bootstrap/dist/css")));
 app.use(express_1.default.static(path_1.default.join(__dirname, "..", "/node_modules/bootstrap/dist/js")));
@@ -29,11 +31,9 @@ app.get("/", (req, res) => {
 });
 app.get("/stock", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const data = yield axios_1.default.get(process.env.STOCK_PAGE_CLOUD_FUNCTION_ENDPOINT +
-            "?key=" +
-            process.env.CLOUD_FUNCTION_SECRET_KEY);
+        const data = yield (0, getMarketOverviewData_1.default)();
         res.status(200).render("stockPage", {
-            stock_data: data.data,
+            stock_data: data,
         });
     }
     catch (e) {
@@ -43,12 +43,7 @@ app.get("/stock", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.get("/stock/:ticker", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let x = yield axios_1.default.get(process.env.STOCKS_CLOUD_FUNCTION_ENPOINT +
-            "?ticker=" +
-            req.params.ticker.toUpperCase() +
-            "&key=" +
-            process.env.CLOUD_FUNCTION_SECRET_KEY);
-        const StockData = x.data;
+        const StockData = yield (0, getTickerPageData_1.default)(req.params.ticker.toUpperCase());
         //if stock data or companyprofile are null, 404
         //only need companyProfile to send back data
         //send 404
