@@ -27,7 +27,6 @@ app.listen(8080, () => {
 app.get("/", (req, res) => {
     res.render("homepage");
 });
-// GET /STOCK
 app.get("/stock", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = yield axios_1.default.get(process.env.STOCK_PAGE_CLOUD_FUNCTION_ENDPOINT +
@@ -65,6 +64,20 @@ app.get("/stock/:ticker", (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (e) {
         res.status(404).send("stock does not exist :(");
+    }
+}));
+app.get("/random", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const data = yield axios_1.default.get("https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
+            req.query.sector +
+            "&limit=500&apikey=" +
+            process.env.STOCK_API_KEY);
+        res.redirect("/stock/" +
+            data.data[Math.floor(Math.random() * data.data.length)].symbol.toLowerCase());
+    }
+    catch (e) {
+        console.log("error fetching random stock by sector :(");
+        res.redirect("/stock");
     }
 }));
 app.get("/privacy", (req, res) => {

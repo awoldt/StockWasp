@@ -1,14 +1,17 @@
 <script src="/chart.min.js"></script>
+
+
+
 <% if (Number(data[0].close) !==Number(data[data.length-1].close)) { %>
   <p class="text-center">
     <%= companyName %> stock has gone <% if (data[data.length-1].close> data[0].close) { %>
-        <span style="color: red;">down <%= (((Math.abs(data[data.length-1].close -
-            data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %> days
+        <span style="color: red; font-weight: bold;">down <%= (((Math.abs(data[data.length-1].close -
+            data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %> days.
           <% } else if(data[data.length-1].close < data[0].close) { %>
             <span style="color: green; font-weight: bold;">up <%= (((Math.abs(data[data.length-1].close -
                 data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %>
-              days
-              <% } %>
+              days.
+              <% } %> The highest price during this time period is $<%=  Math.max(...data.map(x=>{return x.close}).map(y => {return Number(y)})).toFixed(2) %> and the lowest is $<%= Math.min(...data.map(x=>{return x.close}).map(y => {return Number(y)})).toFixed(2) %>.
   </p>
   <% } %>
 
