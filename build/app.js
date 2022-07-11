@@ -19,9 +19,10 @@ const path_1 = __importDefault(require("path"));
 const axios_1 = __importDefault(require("axios"));
 const getMarketOverviewData_1 = __importDefault(require("./functions/getMarketOverviewData"));
 const getTickerPageData_1 = __importDefault(require("./functions/getTickerPageData"));
+const compression_1 = __importDefault(require("compression"));
 app.set("view engine", "ejs");
-app.use(express_1.default.static(path_1.default.join(__dirname, "..", "/node_modules/bootstrap/dist/css")));
-app.use(express_1.default.static(path_1.default.join(__dirname, "..", "/node_modules/bootstrap/dist/js")));
+// Compress all HTTP responses
+app.use((0, compression_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, "..", "/public")));
 app.listen(8080, () => {
     console.log(">APP LISTENING ON PORT 8080");
