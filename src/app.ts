@@ -5,6 +5,8 @@ const app = express();
 import path from "path";
 import axios from "axios";
 import ALL_DATA from "./interfaces/ALL_DATA";
+import getMarketOverviewData from "./functions/getMarketOverviewData";
+import getTickerPageData from "./functions/getTickerPageData";
 
 app.set("view engine", "ejs");
 
@@ -27,13 +29,9 @@ app.get("/", (req, res) => {
 
 app.get("/stock", async (req, res) => {
   try {
-    const data = await axios.get(
-      process.env.STOCK_PAGE_CLOUD_FUNCTION_ENDPOINT +
-        "?key=" +
-        process.env.CLOUD_FUNCTION_SECRET_KEY
-    );
+    const data = await getMarketOverviewData();
     res.status(200).render("stockPage", {
-      stock_data: data.data,
+      stock_data: data,
     });
   } catch (e) {
     console.log("could not get stockpage data :(");
@@ -43,14 +41,9 @@ app.get("/stock", async (req, res) => {
 
 app.get("/stock/:ticker", async (req, res) => {
   try {
-    let x = await axios.get(
-      process.env.STOCKS_CLOUD_FUNCTION_ENPOINT +
-        "?ticker=" +
-        req.params.ticker.toUpperCase() +
-        "&key=" +
-        process.env.CLOUD_FUNCTION_SECRET_KEY
+    const StockData: ALL_DATA | null = await getTickerPageData(
+      req.params.ticker.toUpperCase()
     );
-    const StockData: ALL_DATA | null = x.data;
 
     //if stock data or companyprofile are null, 404
     //only need companyProfile to send back data
@@ -70,7 +63,6 @@ app.get("/stock/:ticker", async (req, res) => {
 });
 
 app.get("/random", async (req, res) => {
-
   try {
     const data = await axios.get(
       "https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
