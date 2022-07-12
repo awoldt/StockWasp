@@ -9,7 +9,7 @@
       </svg>
       <strong>Market Cap</strong>
       <span style="float: right">
-        $<%= String(company.market_cap).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>
+        $<%= String(company.market_cap).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %> <%= company.market_cap >= 1000000000000 ? "(T)" : company.market_cap >= 1000000000 ? "(B)" : company.market_cap >= 1000000 ? "(M)" : null %>
       </span>
     </div>
     <% } %>

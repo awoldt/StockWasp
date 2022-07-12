@@ -66,6 +66,10 @@ async function getCompanyQuote(ticker: string) {
       percent_change: data.data[0].changesPercentage,
       day_low: data.data[0].dayLow,
       day_high: data.data[0].dayHigh,
+      year_low: data.data[0].yearLow,
+      year_high: data.data[0].yearHigh,
+      eps: data.data[0].eps,
+      shares_outstanding: data.data[0].sharesOutstanding
     };
 
     return returnData;

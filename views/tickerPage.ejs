@@ -26,7 +26,7 @@
   <meta name="twitter:description"
     content="Discover <%= stock_data.companyProfile.name %>'s stock price today along with 30 day chart" />
   <meta name="twitter:image" content="<%= stock_data.companyProfile.image %>" />
-
+  <link rel="stylesheet" href="/global.css" />
   <link rel="stylesheet" href="/bootstrap.min.css" />
   <script src="/bootstrap.min.js"></script>
 
@@ -182,7 +182,7 @@
               <div class="col col-lg-8" style="margin-top: 100px">
                 <% if (stock_data.historicalPrices !==null && stock_data.companyProfile.name !==null) { %>
                   <%- include('./components/Chart.ejs', {data: stock_data.historicalPrices, companyName:
-                    stock_data.companyProfile.name}) %>
+                    stock_data.companyProfile.name, isMarketOpen: stock_data.isStockMarketOpen, extraStats: stock_data.companyQuote}) %>
                     <% } %>
               </div>
             </div>

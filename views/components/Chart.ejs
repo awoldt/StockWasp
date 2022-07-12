@@ -3,7 +3,7 @@
 
 
 <% if (Number(data[0].close) !==Number(data[data.length-1].close)) { %>
-  <p class="text-center">
+  <p class="text-center mx-auto" style="max-width: 600px;">
     <%= companyName %> stock has gone <% if (data[data.length-1].close> data[0].close) { %>
         <span style="color: red; font-weight: bold;">down <%= (((Math.abs(data[data.length-1].close -
             data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %> days.
@@ -22,7 +22,7 @@
 
 
 
-    <p class="text-secondary text-center" style="font-size: 14px;" id="chart_statement"></p>
+    <p class="text-secondary text-center mb-3" style="font-size: 14px;" id="chart_statement"></p>
 
 
 
@@ -30,8 +30,9 @@
       const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const d = new Date();
       let day = weekday[d.getDay()];
+      let market_open = "<%= isMarketOpen %>"
 
-      if (day !== 'Saturday' && day !== 'Sunday') {
+      if (day !== 'Saturday' && day !== 'Sunday' && market_open !== "false") {
         document.getElementById("chart_statement").innerText = "Chart does not include today's price data until afterhours. The most recent day added is <%= data[0].date %>."
       }
       else {
@@ -82,3 +83,28 @@
         },
       });
     </script>
+
+
+<% if (extraStats !== null) { %>
+ <ul class="list-group mx-auto mt-5" style="width: 70%;">
+  <% if (extraStats.day_low !== null) { %>
+   <li class="list-group-item" style="border: none;"><strong>Day low</strong><span style="float: right;">$<%= extraStats.day_low %></span></li>
+  <% } %>
+  
+  <% if (extraStats.day_high !== null) { %>
+    <li class="list-group-item" style="border: none;"><strong>Day high</strong><span style="float: right;">$<%= extraStats.day_high %></span></li>
+   <% } %>
+   <% if (extraStats.year_low !== null) { %>
+    <li class="list-group-item" style="border: none;"><strong>Year low</strong><span style="float: right;">$<%= extraStats.year_low %></span></li>
+   <% } %>
+   <% if (extraStats.year_high !== null) { %>
+    <li class="list-group-item" style="border: none;"><strong>Year high</strong><span style="float: right;">$<%= extraStats.year_high %></span></li>
+   <% } %>
+   <% if (extraStats.eps !== null) { %>
+    <li class="list-group-item" style="border: none;"><strong>EPS</strong><span style="float: right;">$<%= extraStats.eps %></span></li>
+   <% } %>
+   <% if (extraStats.shares_outstanding !== null) { %>
+    <li class="list-group-item" style="border: none;"><strong>Shares outstanding</strong><span style="float: right;"><%= extraStats.shares_outstanding %></span></li>
+   <% } %>
+</ul>
+<% } %>
