@@ -6,12 +6,12 @@
   <p class="text-center mx-auto" style="max-width: 600px;">
     <%= companyName %> stock has gone <% if (data[data.length-1].close> data[0].close) { %>
         <span style="color: red; font-weight: bold;">down <%= (((Math.abs(data[data.length-1].close -
-            data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %> days.
+            data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %> days,
           <% } else if(data[data.length-1].close < data[0].close) { %>
             <span style="color: green; font-weight: bold;">up <%= (((Math.abs(data[data.length-1].close -
                 data[0].close)/data[data.length-1].close)*100).toFixed(2)) %>%</span> in the past <%= data.length %>
-              days.
-              <% } %> The highest price during this time period is $<%=  Math.max(...data.map(x=>{return x.close}).map(y => {return Number(y)})).toFixed(2) %> and the lowest is $<%= Math.min(...data.map(x=>{return x.close}).map(y => {return Number(y)})).toFixed(2) %>.
+              days,
+              <% } %> with the high being $<%=  Math.max(...data.map(x=>{return x.close}).map(y => {return Number(y)})).toFixed(2) %> and the low $<%= Math.min(...data.map(x=>{return x.close}).map(y => {return Number(y)})).toFixed(2) %>.
   </p>
   <% } %>
 
@@ -88,23 +88,23 @@
 <% if (extraStats !== null) { %>
  <ul class="list-group mx-auto mt-5" style="width: 70%;">
   <% if (extraStats.day_low !== null) { %>
-   <li class="list-group-item" style="border: none;"><strong>Day low</strong><span style="float: right;">$<%= extraStats.day_low %></span></li>
+   <li class="list-group-item" style="border: none;"><b>Day low</b><span style="float: right;">$<%= extraStats.day_low.toFixed(2) %></span></li>
   <% } %>
   
   <% if (extraStats.day_high !== null) { %>
-    <li class="list-group-item" style="border: none;"><strong>Day high</strong><span style="float: right;">$<%= extraStats.day_high %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Day high</b><span style="float: right;">$<%= extraStats.day_high.toFixed(2) %></span></li>
    <% } %>
    <% if (extraStats.year_low !== null) { %>
-    <li class="list-group-item" style="border: none;"><strong>Year low</strong><span style="float: right;">$<%= extraStats.year_low %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Year low</b><span style="float: right;">$<%= extraStats.year_low.toFixed(2) %></span></li>
    <% } %>
    <% if (extraStats.year_high !== null) { %>
-    <li class="list-group-item" style="border: none;"><strong>Year high</strong><span style="float: right;">$<%= extraStats.year_high %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Year high</b><span style="float: right;">$<%= extraStats.year_high.toFixed(2) %></span></li>
    <% } %>
    <% if (extraStats.eps !== null) { %>
-    <li class="list-group-item" style="border: none;"><strong>EPS</strong><span style="float: right;">$<%= extraStats.eps %></span></li>
+    <li class="list-group-item" style="border: none;"><b>EPS</b><span style="float: right;">$<%= extraStats.eps %></span></li>
    <% } %>
    <% if (extraStats.shares_outstanding !== null) { %>
-    <li class="list-group-item" style="border: none;"><strong>Shares outstanding</strong><span style="float: right;"><%= extraStats.shares_outstanding %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Shares outstanding</b><span style="float: right;"><%= String(extraStats.shares_outstanding).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span></li>
    <% } %>
 </ul>
 <% } %>
