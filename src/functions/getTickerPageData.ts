@@ -107,7 +107,7 @@ async function getRelatedStocks(ticker: string, sector: string) {
     const data = await axios.get(
       "https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
         sector +
-        "&limit=100&apikey=" +
+        "&limit=25&apikey=" +
         process.env.STOCK_API_KEY
     );
     //get all tickers from screener

@@ -86,19 +86,19 @@
 
 
 <% if (extraStats !== null) { %>
- <ul class="list-group mx-auto mt-5" style="width: 70%;">
+ <ul class="list-group mx-auto mt-5" style="width: 100%;">
   <% if (extraStats.day_low !== null) { %>
-   <li class="list-group-item" style="border: none;"><b>Day low</b><span style="float: right;">$<%= extraStats.day_low.toFixed(2) %></span></li>
+   <li class="list-group-item" style="border: none;"><b>Day low</b><span style="float: right;">$<%= String(extraStats.day_low.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span></li>
   <% } %>
   
   <% if (extraStats.day_high !== null) { %>
-    <li class="list-group-item" style="border: none;"><b>Day high</b><span style="float: right;">$<%= extraStats.day_high.toFixed(2) %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Day high</b><span style="float: right;">$<%= String(extraStats.day_high.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span></li>
    <% } %>
    <% if (extraStats.year_low !== null) { %>
-    <li class="list-group-item" style="border: none;"><b>Year low</b><span style="float: right;">$<%= extraStats.year_low.toFixed(2) %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Year low</b><span style="float: right;">$<%= String(extraStats.year_low.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span></li>
    <% } %>
    <% if (extraStats.year_high !== null) { %>
-    <li class="list-group-item" style="border: none;"><b>Year high</b><span style="float: right;">$<%= extraStats.year_high.toFixed(2) %></span></li>
+    <li class="list-group-item" style="border: none;"><b>Year high</b><span style="float: right;">$<%= String(extraStats.year_high.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %></span></li>
    <% } %>
    <% if (extraStats.eps !== null) { %>
     <li class="list-group-item" style="border: none;"><b>EPS</b><span style="float: right;">$<%= extraStats.eps %></span></li>
