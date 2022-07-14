@@ -80,6 +80,8 @@ app.get("/random", async (req, res) => {
   }
 });
 
+
+//finish this route at some point
 // app.get("/insider", async (req, res) => {
 //   if (req.query.symbol == undefined || req.query.symbol == "") {
 //     res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
