@@ -8,6 +8,7 @@ import ALL_DATA from "./interfaces/ALL_DATA";
 import getMarketOverviewData from "./functions/getMarketOverviewData";
 import getTickerPageData from "./functions/getTickerPageData";
 import compression from "compression";
+import getInsiderInfo from "./functions/getInsiderInfo";
 
 app.set("view engine", "ejs");
 
@@ -78,6 +79,21 @@ app.get("/random", async (req, res) => {
     res.redirect("/stock");
   }
 });
+
+// app.get("/insider", async (req, res) => {
+//   if (req.query.symbol == undefined || req.query.symbol == "") {
+//     res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
+//   } else {
+//     const data = await getInsiderInfo(String(req.query.symbol));
+//     if (data !== null) {
+//       res.status(200).render("insider", {
+//         insider_data: data,
+//       });
+//     } else {
+//       res.redirect("/");
+//     }
+//   }
+// });
 
 app.get("/privacy", (req, res) => {
   res.status(200).render("privacy");
