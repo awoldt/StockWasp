@@ -54,10 +54,17 @@
     <div class="container pt-5">
       <%- include('./components/Search.ejs') %>
 
+
+
+
+
+
+
         <p class="text-center mx-auto" style="max-width: 850px; margin-bottom: 50px;"><strong>
             <%= stock_data.mostActive[0].companyName %>
           </strong> has the highest average volume of any stock with <%=
-            String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %> shares traded. <strong>
+            String(stock_data.mostActive[0].volAvg).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %> shares traded.
+            <strong>
               <%= stock_data.mostActive[1].companyName %>
             </strong> and <strong>
               <%= stock_data.mostActive[2].companyName %>
@@ -116,8 +123,8 @@
             </ul>
           </div>
         </div>
-        <p class="text-secondary text-center mb-5" style="margin-top: 25px;">Showing <%= stock_data.mostActive.length
-            %> of the most active stocks on the market</p>
+        <p class="text-secondary text-center mb-5" style="margin-top: 25px;">Showing <%= stock_data.mostActive.length %>
+            of the most active stocks on the market</p>
 
 
         <script>
@@ -128,7 +135,7 @@
             if (window.innerWidth >= 992) {
               splide = new Splide(".splide", {
                 type: "loop",
-                perPage: 4,
+                perPage: 3,
                 perMove: 1,
               });
 
@@ -136,7 +143,7 @@
             } else if (window.innerWidth >= 768) {
               splide = new Splide(".splide", {
                 type: "loop",
-                perPage: 3,
+                perPage: 1,
                 perMove: 1,
               });
 
@@ -156,7 +163,7 @@
             if (window.innerWidth >= 992) {
               splide = new Splide(".splide", {
                 type: "loop",
-                perPage: 4,
+                perPage: 3,
                 perMove: 1,
               });
 
@@ -164,7 +171,7 @@
             } else if (window.innerWidth >= 768) {
               splide = new Splide(".splide", {
                 type: "loop",
-                perPage: 3,
+                perPage: 1,
                 perMove: 1,
               });
 
@@ -181,10 +188,10 @@
           }
         </script>
 
-        <hr>
+
 
         <div class="row mb-5  text-center">
-          <div class="col-lg-6 mt-5">
+          <div class="col-lg-6">
             <div class="mb-3">
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
                 class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
@@ -219,7 +226,7 @@
 
 
           </div>
-          <div class="col-lg-6 mt-5">
+          <div class="col-lg-6">
             <div class="mb-3">
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
                 class="bi bi-graph-down-arrow" viewBox="0 0 16 16">
@@ -255,29 +262,45 @@
           </div>
         </div>
 
+
+
+
+
+
+
+
+
+
+
+
+        <hr>
+
+
+
         <%- include('./components/Sectors') %>
 
-        <footer>
-          <p class="text-secondary mt-5" style="font-size: 14px">
-            Data provided by
-            <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation"
-              href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial
-              Modeling Prep
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit"
-                class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                <path fill-rule="evenodd"
-                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-              </svg></a><br />This site is not intended for financial advice. Invest at your
-            own risk.
-          </p>
-          <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">All trademarks, logos, and brand
-            names are the property of their respective owners. All company, product, and service names used in this
-            website
-            are for identification and informational purposes only. Use of these names, trademarks, and brands does not
-            imply endorsement.</p>
-        </footer>
+          <footer>
+            <p class="text-secondary mt-5" style="font-size: 14px">
+              Data provided by
+              <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation"
+                href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial
+                Modeling Prep
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit"
+                  class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                  <path fill-rule="evenodd"
+                    d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                </svg></a><br />This site is not intended for financial advice. Invest at your
+              own risk.
+            </p>
+            <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">All trademarks, logos, and brand
+              names are the property of their respective owners. All company, product, and service names used in this
+              website
+              are for identification and informational purposes only. Use of these names, trademarks, and brands does
+              not
+              imply endorsement.</p>
+          </footer>
 
     </div>
 </body>
