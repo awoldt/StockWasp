@@ -9,25 +9,9 @@
 </head>
 
 <body>
+  <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
   <div class="container">
-    <% if (insider_data !==null) { %>
-    <h1>Insider Trading for <%= insider_data[0].symbol%>
-    </h1>
-    <% insider_data.map(x=> { %>
-    <% if (x.reportingName !==null && x.reportingName !==undefined) { %>
-    <div>
-        <span style="display: block;"><%= x.reportingName.toLowerCase() %></span>
-        <span style="display: block;" class="text-secondary">filling date: <%= x.filingDate %></span>
-        <span style="display: block;" class="text-secondary">transaction date: <%= x.transactionDate %></span>
-        <span style="display: block;" class="text-secondary">transaction type: <%= x.transactionType %></span>
-
-        <p>At the time of this transaction, <%= x.reportingName.toLowerCase() %> owned <%= x.securitiesOwned %> shares.</p>
-        <a href="<%= x.link %>" target="_blank" rel="noreferrer">View official SEC form</a>
-    </div>
-    <% } %>
-
-    <% }) %>
-    <% } %>
+    <h1><%= insider_data.company_profile.name %> Insider Trading</h1>
 
   </div>
 

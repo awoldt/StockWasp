@@ -9,6 +9,7 @@ import getMarketOverviewData from "./functions/getMarketOverviewData";
 import getTickerPageData from "./functions/getTickerPageData";
 import compression from "compression";
 import getInsiderInfo from "./functions/getInsiderInfo";
+import ALL_INSIDER_DATA from "./interfaces/ALL_INSIDER_DATA";
 
 app.set("view engine", "ejs");
 
@@ -81,21 +82,20 @@ app.get("/random", async (req, res) => {
 });
 
 
-//finish this route at some point
-// app.get("/insider", async (req, res) => {
-//   if (req.query.symbol == undefined || req.query.symbol == "") {
-//     res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
-//   } else {
-//     const data = await getInsiderInfo(String(req.query.symbol));
-//     if (data !== null) {
-//       res.status(200).render("insider", {
-//         insider_data: data,
-//       });
-//     } else {
-//       res.redirect("/");
-//     }
-//   }
-// });
+app.get("/insider", async (req, res) => {
+  if (req.query.symbol == undefined || req.query.symbol == "") {
+    res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
+  } else {
+    const data: ALL_INSIDER_DATA = await getInsiderInfo(String(req.query.symbol));
+    if (data !== null) {
+      res.status(200).render("insider", {
+        insider_data: data,
+      });
+    } else {
+      res.redirect("/");
+    }
+  }
+});
 
 app.get("/privacy", (req, res) => {
   res.status(200).render("privacy");

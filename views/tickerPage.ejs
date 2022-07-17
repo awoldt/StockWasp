@@ -40,8 +40,6 @@
     .nav-link {
       color: white
     }
-
-    
   </style>
   <%- include('./components/googleAnalytics.ejs') %>
 </head>
@@ -155,7 +153,8 @@
                           </span>
                           <% if (stock_data.companyQuote.price !==null) { %>
                             <span style="font-size: 30px; display: block">$<%=
-                                String(stock_data.companyQuote.price.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>
+                                String(stock_data.companyQuote.price.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, "," )
+                                %>
                                 <span style="font-size: 20px">
                                   <%- include('./components/GainLoss.ejs', {data: stock_data}) %>
                                 </span>
@@ -181,7 +180,8 @@
               <div class="col col-lg-8" style="margin-top: 100px">
                 <% if (stock_data.historicalPrices !==null && stock_data.companyProfile.name !==null) { %>
                   <%- include('./components/Chart.ejs', {data: stock_data.historicalPrices, companyName:
-                    stock_data.companyProfile.name, isMarketOpen: stock_data.isStockMarketOpen, extraStats: stock_data.companyQuote}) %>
+                    stock_data.companyProfile.name, isMarketOpen: stock_data.isStockMarketOpen, extraStats:
+                    stock_data.companyQuote}) %>
                     <% } %>
               </div>
             </div>
@@ -221,7 +221,6 @@
                 endorsement.</p>
             </footer>
     </div>
-    <script src="/responsive.js"></script>
 </body>
 
 </html>
