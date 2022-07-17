@@ -81,21 +81,23 @@ app.get("/random", async (req, res) => {
   }
 });
 
+app.get("/insider", async (req, res) => {
+  res.status(200).render("insiderHomepage");
+});
 
-// app.get("/insider", async (req, res) => {
-//   if (req.query.symbol == undefined || req.query.symbol == "") {
-//     res.status(200).render('insiderHomepage')
-//   } else {
-//     const data: ALL_INSIDER_DATA = await getInsiderInfo(String(req.query.symbol));
-//     if (data !== null) {
-//       res.status(200).render("insider", {
-//         insider_data: data,
-//       });
-//     } else {
-//       res.redirect("/");
-//     }
-//   }
-// });
+app.get("/insider/:ticker", async (req, res) => {
+  const data: ALL_INSIDER_DATA = await getInsiderInfo(req.params.ticker);
+  console.log(data);
+  console.log(data.insider_reports);
+
+  if (data.insider_reports == null) {
+    res.status(404).send("stock does not exist :(");
+  } else {
+    res.render("insider", {
+      insider_data: data,
+    });
+  }
+});
 
 app.get("/privacy", (req, res) => {
   res.status(200).render("privacy");

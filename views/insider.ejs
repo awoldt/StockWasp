@@ -10,24 +10,39 @@
 
 <body>
   <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-    <div class="container">
-      <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid"/>
-      <h1>
-        <%= insider_data.company_profile.name %> Insider Trading
-      </h1>
-      <ul class="list-group">
+  <div class="container">
+    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" />
+    <h1>
+      <%= insider_data.company_profile.name %> Insider Trading
+    </h1>
+    <ul class="list-group">
 
-        <% insider_data.insider_reports.map(x=> { %>
-          <li class="list-group-item">
-            <span style="display: block;">
-              <%= x.person %>
+      <% insider_data.insider_reports.map(x=> { %>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col"> <span style="display: block;">
+              <%= x.person.toUpperCase() %>
             </span>
-            <span class="text-secondary">Position: <%= x.person_position %></span>
-          </li>
-          <% }) %>
-      </ul>
+            <span class="text-secondary mb-3" style="display: block;">Position: <%= x.person_position %></span>
+            <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
+            <span style="display: block;">Date filed: <%= x.filingDate %></span>
+          </div>
+          <div class="col">
+            <span style="display: block;">Securities owned:
+              <code style="color: black"><%= x.securities_owned %></code>
+            </span>
+            <span style="display: block;">Securities after trade: <code style="color: black"><%= x.securities_owned - x.securities_transacted %></code></span>
+            <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code>
+          </div>
+        </div>
 
-    </div>
+
+
+      </li>
+      <% }) %>
+    </ul>
+
+  </div>
 
 
 </body>

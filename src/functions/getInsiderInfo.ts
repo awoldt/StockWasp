@@ -18,11 +18,11 @@ async function getInsiderReports(symbol: String) {
 
       let returnData: insider_data[] = data.data.map((x: any) => {
         return {
-          filingDate: x.filingDate,
+          filingDate: x.filingDate.split(' ')[0],
           transactionDate: x.transactionDate,
           transactionType: x.transactionType,
           person: x.reportingName,
-          person_position: x.typeOfOwner,
+          person_position: x.typeOfOwner.split('officer: ').length > 1 ? x.typeOfOwner.split('officer: ')[1] : x.typeOfOwner,
           form_type: x.formType,
           securities_owned: x.securitiesOwned,
           securities_transacted: x.securitiesTransacted,
