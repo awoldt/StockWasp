@@ -82,20 +82,20 @@ app.get("/random", async (req, res) => {
 });
 
 
-app.get("/insider", async (req, res) => {
-  if (req.query.symbol == undefined || req.query.symbol == "") {
-    res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
-  } else {
-    const data: ALL_INSIDER_DATA = await getInsiderInfo(String(req.query.symbol));
-    if (data !== null) {
-      res.status(200).render("insider", {
-        insider_data: data,
-      });
-    } else {
-      res.redirect("/");
-    }
-  }
-});
+// app.get("/insider", async (req, res) => {
+//   if (req.query.symbol == undefined || req.query.symbol == "") {
+//     res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
+//   } else {
+//     const data: ALL_INSIDER_DATA = await getInsiderInfo(String(req.query.symbol));
+//     if (data !== null) {
+//       res.status(200).render("insider", {
+//         insider_data: data,
+//       });
+//     } else {
+//       res.redirect("/");
+//     }
+//   }
+// });
 
 app.get("/privacy", (req, res) => {
   res.status(200).render("privacy");

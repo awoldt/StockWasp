@@ -69,7 +69,7 @@ async function getCompanyQuote(ticker: string) {
       year_low: data.data[0].yearLow,
       year_high: data.data[0].yearHigh,
       eps: data.data[0].eps,
-      shares_outstanding: data.data[0].sharesOutstanding
+      shares_outstanding: data.data[0].sharesOutstanding,
     };
 
     return returnData;
@@ -107,7 +107,7 @@ async function getRelatedStocks(ticker: string, sector: string) {
     const data = await axios.get(
       "https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
         sector +
-        "&limit=25&apikey=" +
+        "&exchange=NYSE,NASDAQ&limit=25&apikey=" +
         process.env.STOCK_API_KEY
     );
     //get all tickers from screener
@@ -118,6 +118,7 @@ async function getRelatedStocks(ticker: string, sector: string) {
         stock.symbol !== ticker.toUpperCase() && stock.companyName.length < 27
       );
     });
+
     let ticks = tickers.map((x: any) => {
       return x.symbol;
     });

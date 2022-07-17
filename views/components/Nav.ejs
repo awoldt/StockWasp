@@ -9,12 +9,12 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <% if (current_page=='stock_page' ) { %>
-        <a class="nav-link" aria-current="page" href="/stock" title="Check out market overview for today">Market Overview</a>
+        <a class="nav-link active" aria-current="page" href="/stock" title="Check out market overview for today">Market Overview</a>
         <a class="nav-link" href="/privacy" title="Privacy page">Privacy</a>
         <% } else if(current_page=='privacy' ) { %>
         <a class="nav-link"  href="/stock" title="Check out market overview for today">Market
           Overview</a>
-        <a class="nav-link" aria-current="page" href="/privacy" title="Privacy page">Privacy</a>
+        <a class="nav-link active" aria-current="page" href="/privacy" title="Privacy page">Privacy</a>
         <% } else if(current_page == 'other') { %>
         <a class="nav-link" href="/stock" title="Check out market overview for today">Market Overview</a>
         <a class="nav-link" href="/privacy" title="Privacy page">Privacy</a>
