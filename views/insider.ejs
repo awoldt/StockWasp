@@ -10,10 +10,24 @@
 
 <body>
   <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-  <div class="container">
-    <h1><%= insider_data.company_profile.name %> Insider Trading</h1>
+    <div class="container">
+      <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid"/>
+      <h1>
+        <%= insider_data.company_profile.name %> Insider Trading
+      </h1>
+      <ul class="list-group">
 
-  </div>
+        <% insider_data.insider_reports.map(x=> { %>
+          <li class="list-group-item">
+            <span style="display: block;">
+              <%= x.person %>
+            </span>
+            <span class="text-secondary">Position: <%= x.person_position %></span>
+          </li>
+          <% }) %>
+      </ul>
+
+    </div>
 
 
 </body>

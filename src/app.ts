@@ -84,7 +84,7 @@ app.get("/random", async (req, res) => {
 
 // app.get("/insider", async (req, res) => {
 //   if (req.query.symbol == undefined || req.query.symbol == "") {
-//     res.status(200).sendFile(path.join(__dirname, "..", "/insiderHomepage.html"));
+//     res.status(200).render('insiderHomepage')
 //   } else {
 //     const data: ALL_INSIDER_DATA = await getInsiderInfo(String(req.query.symbol));
 //     if (data !== null) {

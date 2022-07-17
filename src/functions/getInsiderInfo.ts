@@ -82,7 +82,5 @@ export default async function processQuery(symbol: string) {
     company_profile: COMPANYPROFILE,
   };
 
-  console.log(returnData);
-
   return returnData;
 }
