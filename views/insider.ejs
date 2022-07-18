@@ -28,14 +28,24 @@
             <span style="display: block;">Date filed: <%= x.filingDate %></span>
           </div>
           <div class="col">
-            <span style="display: block;">Securities owned:
+
+            <% if (x.transactionType.indexOf('A-Award') !==-1) { %>
+            <span style="display: block;">Securities awarded to individual:
               <code style="color: black"><%= x.securities_owned %></code>
             </span>
-            <span style="display: block;">Securities after trade: <code style="color: black"><%= x.securities_owned - x.securities_transacted %></code></span>
             <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code>
+              <% } else { %>
+              <span style="display: block;">Securities owned:
+                <code style="color: black"><%= x.securities_owned %></code>
+              </span>
+              <span style="display: block;">Securities after trade: <code style="color: black"><%= x.securities_owned - x.securities_transacted %></code></span>
+              <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
+              <% } %>
+
+
           </div>
         </div>
-
+        <a href="<%= x.sec_link %>">SEC record</a>
 
 
       </li>
