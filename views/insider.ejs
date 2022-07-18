@@ -10,11 +10,12 @@
 
 <body>
   <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-  <div class="container">
-    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" />
+  <div class="container pt-5 mb-5">
+    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;'/>
     <h1>
       <%= insider_data.company_profile.name %> Insider Trading
     </h1>
+    <div class="text-secondary mb-4"><%= insider_data.company_profile.symbol %> | <%= insider_data.company_profile.exchange %></div>
     <ul class="list-group">
 
       <% insider_data.insider_reports.map(x=> { %>
@@ -29,23 +30,16 @@
           </div>
           <div class="col">
 
-            <% if (x.transactionType.indexOf('A-Award') !==-1) { %>
-            <span style="display: block;">Securities awarded to individual:
+            <span style="display: block;">Securities owned:
               <code style="color: black"><%= x.securities_owned %></code>
             </span>
-            <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code>
-              <% } else { %>
-              <span style="display: block;">Securities owned:
-                <code style="color: black"><%= x.securities_owned %></code>
-              </span>
-              <span style="display: block;">Securities after trade: <code style="color: black"><%= x.securities_owned - x.securities_transacted %></code></span>
-              <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
-              <% } %>
+            <span style="display: block;">Securities transacted: <code style="color: black"><%= x.securities_transacted %></code></span>
+            <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
 
 
           </div>
         </div>
-        <a href="<%= x.sec_link %>">SEC record</a>
+        <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer">SEC record</a>
 
 
       </li>

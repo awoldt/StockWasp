@@ -87,8 +87,7 @@ app.get("/insider", async (req, res) => {
 
 app.get("/insider/:ticker", async (req, res) => {
   const data: ALL_INSIDER_DATA = await getInsiderInfo(req.params.ticker);
-  console.log(data);
-  console.log(data.insider_reports);
+  console.log(data.company_profile);
 
   if (data.insider_reports == null) {
     res.status(404).send("stock does not exist :(");
