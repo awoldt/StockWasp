@@ -14,7 +14,35 @@ async function getInsiderReports(symbol: String) {
     if (data.data.length == 0) {
       return null;
     } else {
-      console.log(data.data);
+
+      let insider_names: any = []; //all the people who appear on SEC records
+      let insider_names_num_of_trades: any = []; //keeps track of the number of trades each person in above array has
+      data.data.forEach((x: any) => {
+        if(insider_names.indexOf(x.reportingName.toUpperCase()) == -1) {
+          insider_names.push(x.reportingName.toUpperCase())
+        }
+      })
+      insider_names_num_of_trades.length = insider_names.length;
+      insider_names_num_of_trades.fill(0);
+      insider_names.forEach((x: string, index: number) => {
+        data.data.forEach((y: any) => {
+          if(x == y.reportingName.toUpperCase()) {
+            insider_names_num_of_trades[index] += 1;
+          }
+        })
+      })
+      let mostTrades = []
+      for(let i=0; i<insider_names.length; ++i) {
+        let x: any = new Object();
+        x.name = insider_names[i];
+        x.trades = insider_names_num_of_trades[i];
+        mostTrades.push(x);
+      }
+      
+      mostTrades.sort((a,b) => {
+        return b.trades-a.trades
+      })
+      console.log(mostTrades);
 
       let returnData: insider_data[] = data.data.map((x: any) => {
         return {
@@ -31,7 +59,7 @@ async function getInsiderReports(symbol: String) {
         };
       });
 
-      return returnData;
+      return [returnData, mostTrades];
     }
   } catch (e) {
     return null;
@@ -74,12 +102,13 @@ async function getCompanyProfile(symbol: string) {
 }
 
 export default async function processQuery(symbol: string) {
-  const INSIDERREPORTS = await getInsiderReports(symbol);
+  const INSIDERREPORTS: any = await getInsiderReports(symbol);
   const COMPANYPROFILE = await getCompanyProfile(symbol);
 
   let returnData: ALL_INSIDER_DATA = {
-    insider_reports: INSIDERREPORTS,
+    insider_reports: INSIDERREPORTS[0],
     company_profile: COMPANYPROFILE,
+    ordered_trades: INSIDERREPORTS[1]
   };
 
   return returnData;

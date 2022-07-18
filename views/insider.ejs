@@ -10,48 +10,61 @@
 
 <body>
   <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-  <div class="container pt-5 mb-5" itemScope itemType="https://schema.org/Corporation">
-    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;' itemprop="logo" />
-    <h1 itemprop="legalName">
-      <%= insider_data.company_profile.name %> Insider Trading
-    </h1>
-    <div class="text-secondary"><span itemprop="tickerSymbol"><%= insider_data.company_profile.symbol %></span> | <%= insider_data.company_profile.exchange %></div>
-    <p class="mt-4">Showing <%= insider_data.insider_reports.length %> of the most latest insider trades filed with the SEC. The most recent trade transaction date was on <%= new Date(insider_data.insider_reports[0].transactionDate) %>.</p>
-    <ul class="list-group">
+    <div class="container pt-5 mb-5" itemScope itemType="https://schema.org/Corporation">
+      <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid"
+        alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;' itemprop="logo" />
+      <h1 itemprop="legalName">
+        <%= insider_data.company_profile.name %> Insider Trading
+      </h1>
+      <div class="text-secondary"><span itemprop="tickerSymbol">
+          <%= insider_data.company_profile.symbol %>
+        </span> | <%= insider_data.company_profile.exchange %>
+      </div>
+      <p class="mt-4">Showing <%= insider_data.insider_reports.length %> of the most latest insider trades filed with
+          the SEC. The most recent trade transaction date was on <%= new
+            Date(insider_data.insider_reports[0].transactionDate) %>. <strong>
+              <%= insider_data.ordered_trades[0].name %>
+            </strong> has had
+            the most transactions during this time period, with <%= insider_data.ordered_trades[0].trades %> trades.
+              Below is a complete break-down of all insider trades from most to least: </p>
+      <ul class="list-group">
 
-      <% insider_data.insider_reports.map(x=> { %>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col">
-            <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
-              <span style="display: block;" itemprop="name">
-                <%= x.person.toUpperCase() %>
-              </span>
-              <span class="text-secondary mb-3" style="display: block;">Position: <span itemprop="jobTitle"><%= x.person_position %></span></span>
+        <% insider_data.insider_reports.map(x=> { %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col">
+                <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                  <span style="display: block;" itemprop="name">
+                    <%= x.person.toUpperCase() %>
+                  </span>
+                  <span class="text-secondary mb-3" style="display: block;">Position: <span itemprop="jobTitle">
+                      <%= x.person_position %>
+                    </span></span>
+                </div>
+
+                <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
+                <span style="display: block;">Date filed: <%= x.filingDate %></span>
+              </div>
+              <div class="col">
+
+                <span style="display: block;">Securities owned:
+                  <code style="color: black"><%= x.securities_owned %></code>
+                </span>
+                <span style="display: block;">Securities transacted: <code
+                    style="color: black"><%= x.securities_transacted %></code></span>
+                <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
+
+
+              </div>
             </div>
-
-            <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
-            <span style="display: block;">Date filed: <%= x.filingDate %></span>
-          </div>
-          <div class="col">
-
-            <span style="display: block;">Securities owned:
-              <code style="color: black"><%= x.securities_owned %></code>
-            </span>
-            <span style="display: block;">Securities transacted: <code style="color: black"><%= x.securities_transacted %></code></span>
-            <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
+            <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer">SEC record</a>
 
 
-          </div>
-        </div>
-        <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer">SEC record</a>
+          </li>
+          <% }) %>
+      </ul>
 
-
-      </li>
-      <% }) %>
-    </ul>
-
-  </div>
+    </div>
 
 
 </body>
