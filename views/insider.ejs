@@ -10,21 +10,26 @@
 
 <body>
   <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-  <div class="container pt-5 mb-5">
-    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;'/>
-    <h1>
+  <div class="container pt-5 mb-5" itemScope itemType="https://schema.org/Corporation">
+    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;' itemprop="logo" />
+    <h1 itemprop="legalName">
       <%= insider_data.company_profile.name %> Insider Trading
     </h1>
-    <div class="text-secondary mb-4"><%= insider_data.company_profile.symbol %> | <%= insider_data.company_profile.exchange %></div>
+    <div class="text-secondary"><span itemprop="tickerSymbol"><%= insider_data.company_profile.symbol %></span> | <%= insider_data.company_profile.exchange %></div>
+    <p class="mt-4">Showing <%= insider_data.insider_reports.length %> of the most latest insider trades filed with the SEC. The most recent trade transaction date was on <%= new Date(insider_data.insider_reports[0].transactionDate) %>.</p>
     <ul class="list-group">
 
       <% insider_data.insider_reports.map(x=> { %>
       <li class="list-group-item">
         <div class="row">
-          <div class="col"> <span style="display: block;">
-              <%= x.person.toUpperCase() %>
-            </span>
-            <span class="text-secondary mb-3" style="display: block;">Position: <%= x.person_position %></span>
+          <div class="col">
+            <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
+              <span style="display: block;" itemprop="name">
+                <%= x.person.toUpperCase() %>
+              </span>
+              <span class="text-secondary mb-3" style="display: block;">Position: <span itemprop="jobTitle"><%= x.person_position %></span></span>
+            </div>
+
             <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
             <span style="display: block;">Date filed: <%= x.filingDate %></span>
           </div>

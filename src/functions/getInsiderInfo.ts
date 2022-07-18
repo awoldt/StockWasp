@@ -22,7 +22,7 @@ async function getInsiderReports(symbol: String) {
           transactionDate: x.transactionDate,
           transactionType: x.transactionType,
           person: x.reportingName,
-          person_position: x.typeOfOwner.split('officer: ').length > 1 ? x.typeOfOwner.split('officer: ')[1] : x.typeOfOwner,
+          person_position: x.typeOfOwner.split('officer: ').length > 1 ? x.typeOfOwner.split('officer: ')[1] : x.typeOfOwner == 'director' ? "Director" : x.typeOfOwner,
           form_type: x.formType,
           securities_owned: x.securitiesOwned,
           securities_transacted: x.securitiesTransacted,
