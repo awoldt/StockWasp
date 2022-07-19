@@ -1,5 +1,4 @@
 import axios from "axios";
-import { createImportSpecifier } from "typescript";
 import related_stock from "../../interfaces/related_stocks";
 
 function shuffleArray(array: any[]) {
