@@ -7,120 +7,145 @@
   <title><%= insider_data.company_profile.name %> (<%= insider_data.company_profile.symbol %>) Insider Trading Activity</title>
   <link rel="stylesheet" href="/bootstrap.min.css" />
   <script src="/bootstrap.min.js"></script>
+  <meta name="description" content="Get the latest insider trades for <%= insider_data.company_profile.name %>" />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://stockwasp.com/insider/<%= insider_data.company_profile.symbol.toLowerCase() %>" />
+  <meta property="og:image" content="<%= insider_data.company_profile.image %>" />
+  <meta property="og:site_name" content="StockWasp" />
+  <meta property="og:title" content="<%= insider_data.company_profile.name %> Insider Trading" />
+  <meta property="og:description" content="Get the latest insider trades for <%= insider_data.company_profile.name %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stockwasp.com/insider/<%= insider_data.company_profile.symbol.toLowerCase() %>" />
+  <!-- Twitter Meta Tags. -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://stockwasp.com/insider/<%= insider_data.company_profile.symbol.toLowerCase() %>" />
+  <meta name="twitter:title" content="<%= insider_data.company_profile.name %> (<%= insider_data.company_profile.symbol %>) Insider Trading Activity" />
+  <meta name="twitter:description" content="Get the latest insider trades for <%= insider_data.company_profile.name %>" />
+  <meta name="twitter:image" content="<%= insider_data.company_profile.image %>" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <%- include('./components/googleAnalytics.ejs') %>
 </head>
 
 <body>
-  <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-    <div class="container pt-5 mb-5" itemScope itemType="https://schema.org/Corporation">
-      <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid"
-        alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;' itemprop="logo" />
-      <h1 itemprop="legalName">
-        <%= insider_data.company_profile.name %> Insider Trading
-      </h1>
-      <div class="text-secondary"><span itemprop="tickerSymbol">
-          <%= insider_data.company_profile.symbol %>
-        </span> | <%= insider_data.company_profile.exchange %>
-      </div>
-      <a href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>"><%= insider_data.company_profile.symbol %> stock price <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-      </svg></a>
-      <p class="mt-4" style="max-width: 750px;">Showing <%= insider_data.insider_reports.length %> of the latest insider trades from <%= insider_data.company_profile.name %> filed with
-          the SEC. The most recent trade transaction date was on <%= new
+  <%- include('./components/Nav.ejs', {current_page: 'insider' }) %>
+  <div class="container pt-5 mb-5" itemScope itemType="https://schema.org/Corporation">
+    <img src="<%= insider_data.company_profile.image %>" height="50" width='50' class="img-fluid" alt="<%= insider_data.company_profile.name %> logo" style='margin-bottom: 10px;' itemprop="logo" />
+    <h1 itemprop="legalName">
+      <%= insider_data.company_profile.name %> Insider Trading
+    </h1>
+    <div class="text-secondary"><span itemprop="tickerSymbol">
+        <%= insider_data.company_profile.symbol %>
+      </span> | <%= insider_data.company_profile.exchange %> <span style="margin-left: 20px;"><a href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>"><%= insider_data.company_profile.symbol %> stock price <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+          </svg></a></span>
+    </div>
+
+    <p class="mt-4" style="max-width: 750px;">Showing <%= insider_data.insider_reports.length %> of the latest insider trades from <%= insider_data.company_profile.name %> filed with
+      the SEC. The most recent trade transaction date was on <%= new
             Date(insider_data.insider_reports[0].transactionDate) %>. <strong>
-              <%= insider_data.ordered_trades[0].name %>
-            </strong> has had
-            the most transactions during this time period, with <%= insider_data.ordered_trades[0].trades %> confirmed trades.
-              Below is a complete break-down of all <%= insider_data.ordered_trades.length %> company insiders who transfered securites: </p>
-              <ul>
-                <% insider_data.ordered_trades.map(x => { %>
-                  <li><%= x.name %> - <%= x.trades %> trades</li>
-                <% })%>
-              </ul>
+        <%= insider_data.ordered_trades[0].name %>
+      </strong> has had
+      the most transactions during this time period, with <%= insider_data.ordered_trades[0].trades %> confirmed trades.
+      Below is a complete break-down of all <%= insider_data.ordered_trades.length %> company insiders who transfered securites: </p>
+    <ul>
+      <% insider_data.ordered_trades.map(x => { %>
+      <% if (x.trades == 1) { %>
+      <li><%= x.name %> - <%= x.trades %> trade</li>
+      <% } else { %>
+      <li><%= x.name %> - <%= x.trades %> trades</li>
+      <% }%>
 
-              <hr>
-              <p>Showing <%= insider_data.insider_reports.length %> of the most recent records</p>
-      <ul class="list-group">
+      <% })%>
+    </ul>
 
-        <% insider_data.insider_reports.map(x=> { %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col">
-                <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
-                  <span style="display: block;" itemprop="name">
-                    <%= x.person.toUpperCase() %>
-                  </span>
-                  <span class="text-secondary mb-3" style="display: block;">Position: <span itemprop="jobTitle">
-                      <%= x.person_position %>
-                    </span></span>
-                </div>
+    <hr>
+    <ul class="list-group">
 
-                <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
-                <span style="display: block;">Date filed: <%= x.filingDate %></span>
-              </div>
-              <div class="col">
-
-                <span style="display: block;">Securities owned:
-                  <code style="color: black"><%= x.securities_owned %></code>
-                </span>
-                <span style="display: block;">Securities transacted: <code
-                    style="color: black"><%= x.securities_transacted %></code></span>
-                <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
-
-
-              </div>
-            </div>
-            <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer">SEC record</a>
-
-
-          </li>
-          <% }) %>
-      </ul>
-
-      <div class="mt-5 mb-5">
-        <h2>Related stocks</h2>
-      
+      <% insider_data.insider_reports.map(x=> { %>
+      <li class="list-group-item">
         <div class="row">
-          <% insider_data.related_stocks.map(x=> { %>
-            <div class="related_stock_col">
-              <a href="/insider/<%= x.ticker.toLowerCase() %>" style="text-decoration: none; color: black">
-                <div class="card m-2 related_stock_card" style="display: inline-block; width: 300px; height: 180px" itemScope
-                  itemType="https://schema.org/Corporation">
-                  <div class="card-body">
-                    <% if (x.logo !==null) { %>
-                      <img src="<%= x.logo %>" style="width: 45px; height: 45px" alt="<%= x.name %> logo" itemprop="logo" />
-                      <% } %>
-                        <div class="card-title">
-                          <span itemProp="legalName"> <b>
-                              <%= x.name %>
-                            </b> </span>
-                        </div>
-                        <div class="card-subtitle text-muted">
-                          <span itemProp="tickerSymbol">
-                            <%= x.ticker %>
-                          </span> |
-                          <span>
-                            <%= x.exchange %>
-                          </span>
-                        </div>
-                       
-                  </div>
-                </div>
-              </a>
+          <div class="col">
+            <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
+              <span style="display: block;" itemprop="name">
+                <%= x.person.toUpperCase() %>
+              </span>
+              <span class="text-secondary mb-3" style="display: block;">Position: <span itemprop="jobTitle">
+                  <%= x.person_position %>
+                </span></span>
             </div>
-      
-      
-            <% }) %>
+
+            <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
+            <span style="display: block;">Date filed: <%= x.filingDate %></span>
+          </div>
+          <div class="col">
+
+            <span style="display: block;">Securities owned:
+              <code style="color: black"><%= x.securities_owned %></code>
+            </span>
+            <span style="display: block;">Securities transacted: <code style="color: black"><%= x.securities_transacted %></code></span>
+            <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
+
+
+          </div>
         </div>
-      
-      
+        <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+            <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+          </svg> SEC record</a>
+
+
+      </li>
+      <% }) %>
+    </ul>
+
+    <div class="mt-5 mb-5">
+      <h2>Related stocks</h2>
+
+      <div class="row">
+        <% insider_data.related_stocks.map(x=> { %>
+        <div class="related_stock_col">
+          <a href="/insider/<%= x.ticker.toLowerCase() %>" style="text-decoration: none; color: black">
+            <div class="card m-2 related_stock_card" style="display: inline-block; width: 300px; height: 180px" itemScope itemType="https://schema.org/Corporation">
+              <div class="card-body">
+                <% if (x.logo !==null) { %>
+                <img src="<%= x.logo %>" style="width: 45px; height: 45px" alt="<%= x.name %> logo" itemprop="logo" />
+                <% } %>
+                <div class="card-title">
+                  <span itemProp="legalName"> <b>
+                      <%= x.name %>
+                    </b> </span>
+                </div>
+                <div class="card-subtitle text-muted">
+                  <span itemProp="tickerSymbol">
+                    <%= x.ticker %>
+                  </span> |
+                  <span>
+                    <%= x.exchange %>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </a>
+        </div>
+
+
+        <% }) %>
       </div>
-      
-      <script>
-        const relatedStockCards = document.getElementsByClassName("related_stock_card");
+
+
+    </div>
+
+    <script>
+      const relatedStockCards = document.getElementsByClassName("related_stock_card");
       const relatedStockCols = document.getElementsByClassName("related_stock_col");
-      
+
       window.addEventListener("DOMContentLoaded", () => {
         //extra lg
         if (window.innerWidth >= 1200) {
@@ -159,7 +184,7 @@
           }
         }
       });
-      
+
       window.addEventListener("resize", () => {
         //extra lg
         if (window.innerWidth >= 1200) {
@@ -198,10 +223,9 @@
           }
         }
       });
-      
-      </script>
+    </script>
 
-    </div>
+  </div>
 
 
 </body>

@@ -10,6 +10,7 @@ import getTickerPageData from "./functions/getTickerPageData";
 import compression from "compression";
 import getInsiderInfo from "./functions/getInsiderInfo";
 import ALL_INSIDER_DATA from "./interfaces/ALL_INSIDER_DATA";
+import getInsiderHomepageInfo from "./functions/getInsiderHomepageInfo";
 
 app.set("view engine", "ejs");
 
@@ -82,7 +83,15 @@ app.get("/random", async (req, res) => {
 });
 
 app.get("/insider", async (req, res) => {
-  res.status(200).render("insiderHomepage");
+  try {
+    const data = await getInsiderHomepageInfo();
+
+    res.status(200).render("insiderHomepage", {
+      insider_data: data,
+    });
+  } catch (e) {
+    res.status(500).send("could not get insider data :(");
+  }
 });
 
 app.get("/insider/:ticker", async (req, res) => {

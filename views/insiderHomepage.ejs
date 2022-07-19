@@ -2,20 +2,89 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/bootstrap.min.css" />
-    <title>HTML 5 Boilerplate</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/bootstrap.min.css" />
+  <script src="/bootstrap.min.js"></script>
+  <meta name="robots" content="index, follow" />
+  <title>Insider Trading Activity | Full SEC Reports</title>
+
+  <meta name="description" content="Get the latest insider trades filed with the SEC. Check each individual person or organization involved with the trade" />
+  <link rel="canonical" href="https://stockwasp.com/insider" />
+  <meta property="og:image" content="/favicon.ico" />
+  <meta property="og:site_name" content="StockWasp" />
+  <meta property="og:title" content="Recent Insider Trading" />
+  <meta property="og:description" content="Get the latest insider trades filed with the SEC. Check each individual person or organization involved with the trade" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stockwasp.com/insider" />
+  <!-- Twitter Meta Tags. -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://stockwasp.com/insider" />
+  <meta name="twitter:title" content="Insider Trading Activity | Full SEC Reports" />
+  <meta name="twitter:description" content="Get the latest insider trades from all public companies" />
+  <meta name="twitter:image" content="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <%- include('./components/googleAnalytics.ejs') %>
 </head>
 
 <body>
-    <%- include('./components/Nav.ejs', {current_page: 'other' }) %>
-        <div class="container">
-            <h1>Insider trading</h1>
-            <p>Insider trading is the transfer of a company's securities by employees with access to confidential or non-public information about the company. It is illegal to engage in this activity without reporting to the SEC and making transaction details open to the public. These records help establish transparency and ensure there are no malicious actors within a company abusing their privilege.</p></pInsider>
-            <p>Here you can search for the most recent SEC filings for any public company. Each record will show the person involved in the transaction along with the number of securities traded. </p>
-            <a href='/insider/aapl'>Apple</a>
+  <%- include('./components/Nav.ejs', {current_page: 'insider' }) %>
+  <div class="container mt-5">
+    <h1>Insider trading</h1>
+    <p>Insider trading is the transfer of a company's securities by employees with access to confidential or non-public information about the company. It is illegal to engage in this activity without reporting to the SEC and making transaction details open to the public. These records help establish transparency to show how money is flowing with regards to people inside the company.</p>
+
+    <p class="mb-5">Here you can search for the most recent SEC filings for any public company. Each record will show the person/organization involved in the transaction along with the number of securities traded. </p>
+    <%- include('./components/CenterSearchInsider.ejs') %>
+    <p>Showing <%= insider_data.length %> of the most recent transactions filed with the SEC</p>
+    <ul class="list-group">
+
+      <% insider_data.map(x=> { %>
+      <li class="list-group-item" itemScope itemType="https://schema.org/Corporation">
+        <div class="row">
+          <div class="col-7">
+            <div class="mb-3">
+              <img src="<%= x.company_logo %>" alt="<%= x.company_name %> logo" class="img-fluid" width="50" height="50" itemprop="logo"/>
+              <span style="margin-left: 10px;" itemprop="legalName"><%= x.company_name %></span> <span class="text-secondary" itemprop="tickerSymbol"><%= x.company_symbol %></span>
+            </div>
+
+            <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
+              <span style="display: block;" itemprop="name">
+                <%= x.person.toUpperCase() %>
+              </span>
+              <span class="text-secondary mb-3" style="display: block;">Position: <span itemprop="jobTitle">
+                  <%= x.person_position %>
+                </span></span>
+            </div>
+
+            <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
+            <span style="display: block;">Date filed: <%= x.filingDate %></span>
+          </div>
+          <div class="col-5">
+
+            <span style="display: block;">Securities owned:
+              <code style="color: black"><%= x.securities_owned %></code>
+            </span>
+            <span style="display: block;">Securities transacted: <code style="color: black"><%= x.securities_transacted %></code></span>
+            <span class="mt-3">Transaction type: <code style="color: black">(<%= x.transactionType %>)</code></span>
+
+
+          </div>
         </div>
+        <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer" style="display: block;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+          <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
+        </svg> SEC record</a>
+        <a href="/insider/<%= x.company_symbol.toLowerCase() %>">View <%= x.company_name %> insider trades</a>
+
+      </li>
+      <% }) %>
+    </ul>
+  </div>
 </body>
 
 </html>
