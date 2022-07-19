@@ -86,10 +86,12 @@ app.get("/insider", async (req, res) => {
 });
 
 app.get("/insider/:ticker", async (req, res) => {
-  const data: ALL_INSIDER_DATA = await getInsiderInfo(req.params.ticker);
+  const data: ALL_INSIDER_DATA | null = await getInsiderInfo(req.params.ticker);
 
-  if (data.insider_reports == null) {
-    res.status(404).send("stock does not exist :(");
+  if (data == null) {
+    res
+      .status(404)
+      .send("Stock does not exist or does not have any insider information :(");
   } else {
     res.render("insider", {
       insider_data: data,

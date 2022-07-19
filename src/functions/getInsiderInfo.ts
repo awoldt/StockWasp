@@ -2,6 +2,7 @@ import axios from "axios";
 import ALL_INSIDER_DATA from "../interfaces/ALL_INSIDER_DATA";
 import insider_data from "../interfaces/insider_data";
 import company_profile from "../interfaces/company_profile";
+import getRelatedStocks from '../functions/data/getRelatedStocks'
 
 async function getInsiderReports(symbol: String) {
   try {
@@ -14,43 +15,45 @@ async function getInsiderReports(symbol: String) {
     if (data.data.length == 0) {
       return null;
     } else {
-
       let insider_names: any = []; //all the people who appear on SEC records
       let insider_names_num_of_trades: any = []; //keeps track of the number of trades each person in above array has
       data.data.forEach((x: any) => {
-        if(insider_names.indexOf(x.reportingName.toUpperCase()) == -1) {
-          insider_names.push(x.reportingName.toUpperCase())
+        if (insider_names.indexOf(x.reportingName.toUpperCase()) == -1) {
+          insider_names.push(x.reportingName.toUpperCase());
         }
-      })
+      });
       insider_names_num_of_trades.length = insider_names.length;
       insider_names_num_of_trades.fill(0);
       insider_names.forEach((x: string, index: number) => {
         data.data.forEach((y: any) => {
-          if(x == y.reportingName.toUpperCase()) {
+          if (x == y.reportingName.toUpperCase()) {
             insider_names_num_of_trades[index] += 1;
           }
-        })
-      })
-      let mostTrades = []
-      for(let i=0; i<insider_names.length; ++i) {
+        });
+      });
+      let mostTrades = [];
+      for (let i = 0; i < insider_names.length; ++i) {
         let x: any = new Object();
         x.name = insider_names[i];
         x.trades = insider_names_num_of_trades[i];
         mostTrades.push(x);
       }
-      
-      mostTrades.sort((a,b) => {
-        return b.trades-a.trades
-      })
-      console.log(mostTrades);
+      mostTrades.sort((a, b) => {
+        return b.trades - a.trades;
+      });
 
       let returnData: insider_data[] = data.data.map((x: any) => {
         return {
-          filingDate: x.filingDate.split(' ')[0],
+          filingDate: x.filingDate.split(" ")[0],
           transactionDate: x.transactionDate,
           transactionType: x.transactionType,
           person: x.reportingName,
-          person_position: x.typeOfOwner.split('officer: ').length > 1 ? x.typeOfOwner.split('officer: ')[1] : x.typeOfOwner == 'director' ? "Director" : x.typeOfOwner,
+          person_position:
+            x.typeOfOwner.split("officer: ").length > 1
+              ? x.typeOfOwner.split("officer: ")[1]
+              : x.typeOfOwner == "director"
+              ? "Director"
+              : x.typeOfOwner,
           form_type: x.formType,
           securities_owned: x.securitiesOwned,
           securities_transacted: x.securitiesTransacted,
@@ -103,13 +106,19 @@ async function getCompanyProfile(symbol: string) {
 
 export default async function processQuery(symbol: string) {
   const INSIDERREPORTS: any = await getInsiderReports(symbol);
-  const COMPANYPROFILE = await getCompanyProfile(symbol);
+  const COMPANYPROFILE: company_profile | null = await getCompanyProfile(symbol);
+  const RELATEDSTOCKS: any[] | null = await getRelatedStocks(COMPANYPROFILE!.symbol!, COMPANYPROFILE!.sector!);
+  //could not get insider info
+  if (INSIDERREPORTS == null) {
+    return null;
+  } else {
+    let returnData: ALL_INSIDER_DATA = {
+      insider_reports: INSIDERREPORTS[0],
+      company_profile: COMPANYPROFILE,
+      ordered_trades: INSIDERREPORTS[1],
+      related_stocks: RELATEDSTOCKS
+    };
 
-  let returnData: ALL_INSIDER_DATA = {
-    insider_reports: INSIDERREPORTS[0],
-    company_profile: COMPANYPROFILE,
-    ordered_trades: INSIDERREPORTS[1]
-  };
-
-  return returnData;
+    return returnData;
+  }
 }

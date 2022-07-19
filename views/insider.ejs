@@ -4,8 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML 5 Boilerplate</title>
+  <title><%= insider_data.company_profile.name %> (<%= insider_data.company_profile.symbol %>) Insider Trading Activity</title>
   <link rel="stylesheet" href="/bootstrap.min.css" />
+  <script src="/bootstrap.min.js"></script>
+  <meta name="robots" content="index, follow" />
 </head>
 
 <body>
@@ -20,13 +22,25 @@
           <%= insider_data.company_profile.symbol %>
         </span> | <%= insider_data.company_profile.exchange %>
       </div>
-      <p class="mt-4">Showing <%= insider_data.insider_reports.length %> of the most latest insider trades filed with
+      <a href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>"><%= insider_data.company_profile.symbol %> stock price <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+      </svg></a>
+      <p class="mt-4" style="max-width: 750px;">Showing <%= insider_data.insider_reports.length %> of the latest insider trades from <%= insider_data.company_profile.name %> filed with
           the SEC. The most recent trade transaction date was on <%= new
             Date(insider_data.insider_reports[0].transactionDate) %>. <strong>
               <%= insider_data.ordered_trades[0].name %>
             </strong> has had
-            the most transactions during this time period, with <%= insider_data.ordered_trades[0].trades %> trades.
-              Below is a complete break-down of all insider trades from most to least: </p>
+            the most transactions during this time period, with <%= insider_data.ordered_trades[0].trades %> confirmed trades.
+              Below is a complete break-down of all <%= insider_data.ordered_trades.length %> company insiders who transfered securites: </p>
+              <ul>
+                <% insider_data.ordered_trades.map(x => { %>
+                  <li><%= x.name %> - <%= x.trades %> trades</li>
+                <% })%>
+              </ul>
+
+              <hr>
+              <p>Showing <%= insider_data.insider_reports.length %> of the most recent records</p>
       <ul class="list-group">
 
         <% insider_data.insider_reports.map(x=> { %>
@@ -63,6 +77,129 @@
           </li>
           <% }) %>
       </ul>
+
+      <div class="mt-5 mb-5">
+        <h2>Related stocks</h2>
+      
+        <div class="row">
+          <% insider_data.related_stocks.map(x=> { %>
+            <div class="related_stock_col">
+              <a href="/insider/<%= x.ticker.toLowerCase() %>" style="text-decoration: none; color: black">
+                <div class="card m-2 related_stock_card" style="display: inline-block; width: 300px; height: 180px" itemScope
+                  itemType="https://schema.org/Corporation">
+                  <div class="card-body">
+                    <% if (x.logo !==null) { %>
+                      <img src="<%= x.logo %>" style="width: 45px; height: 45px" alt="<%= x.name %> logo" itemprop="logo" />
+                      <% } %>
+                        <div class="card-title">
+                          <span itemProp="legalName"> <b>
+                              <%= x.name %>
+                            </b> </span>
+                        </div>
+                        <div class="card-subtitle text-muted">
+                          <span itemProp="tickerSymbol">
+                            <%= x.ticker %>
+                          </span> |
+                          <span>
+                            <%= x.exchange %>
+                          </span>
+                        </div>
+                       
+                  </div>
+                </div>
+              </a>
+            </div>
+      
+      
+            <% }) %>
+        </div>
+      
+      
+      </div>
+      
+      <script>
+        const relatedStockCards = document.getElementsByClassName("related_stock_card");
+      const relatedStockCols = document.getElementsByClassName("related_stock_col");
+      
+      window.addEventListener("DOMContentLoaded", () => {
+        //extra lg
+        if (window.innerWidth >= 1200) {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-4");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+        //lg
+        else if (window.innerWidth >= 992) {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-6");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+        //md
+        else if (window.innerWidth >= 768) {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-6");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+        //sm
+        else {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-12");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+      });
+      
+      window.addEventListener("resize", () => {
+        //extra lg
+        if (window.innerWidth >= 1200) {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-4");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+        //lg
+        else if (window.innerWidth >= 992) {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-6");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+        //md
+        else if (window.innerWidth >= 768) {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-6");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+        //sm
+        else {
+          for (let i = 0; i < relatedStockCols.length; ++i) {
+            relatedStockCols[i].setAttribute("class", "related_stock_col col-12");
+          }
+          for (let i = 0; i < relatedStockCards.length; ++i) {
+            relatedStockCards[i].style.width = "100%";
+          }
+        }
+      });
+      
+      </script>
 
     </div>
 
