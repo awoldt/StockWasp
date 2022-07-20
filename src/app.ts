@@ -100,7 +100,7 @@ app.get("/insider/:ticker", async (req, res) => {
   if (data == null) {
     res
       .status(404)
-      .send("Stock does not exist or does not have any insider information :(");
+      .send("error getting insider information :(");
   } else {
     res.render("insider", {
       insider_data: data,

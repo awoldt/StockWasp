@@ -39,12 +39,20 @@
     <h1 itemprop="legalName">
       <%= insider_data.company_profile.name %> Insider Trading
     </h1>
-    <div class="text-secondary"><span itemprop="tickerSymbol">
+    <div class="text-secondary mt-3 mb-5"><span itemprop="tickerSymbol">
         <%= insider_data.company_profile.symbol %>
-      </span> | <%= insider_data.company_profile.exchange %> <span style="margin-left: 20px;"><a href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>"><%= insider_data.company_profile.symbol %> stock price <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+      </span> | <%= insider_data.company_profile.exchange %>
+      <a style="color: white; text-decoration: none;" href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>" title="<%= insider_data.company_profile.name %> current stock price">
+        <span style="margin-left: 20px; background-color: #712cf9; padding: 10px; border-radius: 20px;">
+          <%= insider_data.company_profile.symbol %> stock price
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
             <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-          </svg></a></span>
+          </svg>
+
+        </span>
+      </a>
+
     </div>
 
     <p class="mt-4" style="max-width: 750px;">Showing <%= insider_data.insider_reports.length %> of the latest insider trades from <%= insider_data.company_profile.name %> filed with
@@ -52,8 +60,8 @@
             Date(insider_data.insider_reports[0].transactionDate) %>. <strong>
         <%= insider_data.ordered_trades[0].name %>
       </strong> has had
-      the most transactions during this time period, with <%= insider_data.ordered_trades[0].trades %> confirmed trades.
-      Below is a complete break-down of all <%= insider_data.ordered_trades.length %> company insiders who transfered securites: </p>
+      the most transactions during this period, with <%= insider_data.ordered_trades[0].trades %> confirmed trades.
+      Below is a complete break-down of all <%= insider_data.ordered_trades.length %> company insiders who transferred securities: </p>
     <ul>
       <% insider_data.ordered_trades.map(x => { %>
       <% if (x.trades == 1) { %>
@@ -70,8 +78,8 @@
 
       <% insider_data.insider_reports.map(x=> { %>
       <li class="list-group-item">
-        <div class="row">
-          <div class="col">
+        <div class="row p-4">
+          <div class="col-md-7">
             <div itemprop="employee" itemscope itemtype="https://schema.org/Person">
               <span style="display: block;" itemprop="name">
                 <%= x.person.toUpperCase() %>
@@ -84,7 +92,7 @@
             <span style="display: block;">Transaction date: <%= x.transactionDate %></span>
             <span style="display: block;">Date filed: <%= x.filingDate %></span>
           </div>
-          <div class="col">
+          <div class="col-md-5">
 
             <span style="display: block;">Securities owned:
               <code style="color: black"><%= x.securities_owned %></code>
@@ -94,10 +102,12 @@
 
 
           </div>
+          <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+              <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+            </svg> SEC record</a>
         </div>
-        <a href="<%= x.sec_link %>" target="_blank" rel="noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-            <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
-          </svg> SEC record</a>
+
+
 
 
       </li>
