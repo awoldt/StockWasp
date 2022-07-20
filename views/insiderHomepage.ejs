@@ -47,7 +47,7 @@
       <% insider_data.map(x=> { %>
       <li class="list-group-item" itemScope itemType="https://schema.org/Corporation">
         <div class="row p-4">
-          <div class="col-md-7">
+          <div class="col-md-7 mb-4">
             <div class="mb-3">
               <img src="<%= x.company_logo %>" alt="<%= x.company_name %> logo" class="img-fluid" width="50" height="50" itemprop="logo"/>
               <span style="margin-left: 10px;" itemprop="legalName"><%= x.company_name %></span> <span class="text-secondary" itemprop="tickerSymbol"><%= x.company_symbol %></span>
