@@ -42,8 +42,8 @@
     <div class="text-secondary mt-3 mb-5"><span itemprop="tickerSymbol">
         <%= insider_data.company_profile.symbol %>
       </span> | <%= insider_data.company_profile.exchange %>
-      <a style="color: white; text-decoration: none;" href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>" title="<%= insider_data.company_profile.name %> current stock price">
-        <span style="margin-left: 20px; background-color: #712cf9; padding: 10px; border-radius: 20px;">
+      <a style="color: black; text-decoration: none;" href="/stock/<%= insider_data.company_profile.symbol.toLowerCase() %>" title="<%= insider_data.company_profile.name %> current stock price">
+        <span style="margin-left: 20px; background-color: rgb(113, 44, 249, .2); padding: 12px; border-radius: 20px; ">
           <%= insider_data.company_profile.symbol %> stock price
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
@@ -234,6 +234,29 @@
         }
       });
     </script>
+
+<footer>
+  <p class="text-secondary mt-5" style="font-size: 14px">
+    Data provided by
+    <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation"
+      href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial
+      Modeling Prep
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit"
+        class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+        <path fill-rule="evenodd"
+          d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+      </svg></a><br>This site is not intended for financial advice. Invest at your
+    own risk.
+  </p>
+  <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">All trademarks, logos, and brand
+    names are the property of their respective owners. All company, product, and service names used in this
+    website
+    are for identification and informational purposes only. Use of these names, trademarks, and brands does
+    not imply
+    endorsement.</p>
+</footer>
 
   </div>
 

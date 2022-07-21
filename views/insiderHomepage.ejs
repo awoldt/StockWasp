@@ -37,10 +37,12 @@
   <%- include('./components/Nav.ejs', {current_page: 'insider' }) %>
   <div class="container mt-5">
     <h1>Insider trading</h1>
-    <p>Insider trading is the transfer of a company's securities by employees with access to confidential or non-public information about the company. It is illegal to engage in this activity without reporting to the SEC and making transaction details open to the public. These records help establish transparency to show how money is flowing with regards to people inside the company.</p>
+    <p style="max-width: 700px;">Insider trading is the transfer of a company's securities by employees with access to confidential or non-public information about the company. It is illegal to engage in this activity without reporting to the SEC and making transaction details open to the public. Insider trading is prohibited to ensure a fair market for everyone, encouraging the average investor to participate in the buying and selling stocks.</p>
 
-    <p class="mb-5">Here you can search for any public company's most recent SEC filings. Each record will show the person involved in the transaction and the number of securities traded.</p>
-    <%- include('./components/CenterSearchInsider.ejs') %>
+    <p style="max-width: 700px;" class="mb-5">Here you can search for various public company's most recent SEC filings. Each record will show the person or organization involved in the transaction and the number of securities traded.</p>
+  
+    <%- include('./components/InsiderSearch.ejs') %>
+    <hr>
     <p>Showing <%= insider_data.length %> of the most recent transactions filed with the SEC</p>
     <ul class="list-group">
 
@@ -85,6 +87,28 @@
       </li>
       <% }) %>
     </ul>
+    <footer>
+      <p class="text-secondary mt-5" style="font-size: 14px">
+        Data provided by
+        <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation"
+          href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial
+          Modeling Prep
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit"
+            class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+            <path fill-rule="evenodd"
+              d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+          </svg></a><br>This site is not intended for financial advice. Invest at your
+        own risk.
+      </p>
+      <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">All trademarks, logos, and brand
+        names are the property of their respective owners. All company, product, and service names used in this
+        website
+        are for identification and informational purposes only. Use of these names, trademarks, and brands does
+        not imply
+        endorsement.</p>
+    </footer>
   </div>
 </body>
 
