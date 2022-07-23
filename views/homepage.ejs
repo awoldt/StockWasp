@@ -9,7 +9,7 @@
   <script src="/bootstrap.min.js"></script>
 
   <meta name="description"
-    content="StockWasp provides a simple and clean interface to research all your favorite stocks from the NASDAQ and NYSE markets" />
+    content="StockWasp provides a simple and clean interface to find all your favorite stocks price and news information" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://stockwasp.com" />
   <meta property="og:image" content="https://stockwasp.com/opengraph_logo.svg" />
@@ -33,6 +33,11 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
   <%- include('./components/googleAnalytics.ejs') %>
+    <style>
+      .col-3 {
+        padding: 10px;
+      }
+    </style>
 </head>
 
 <body>
@@ -41,7 +46,7 @@
   <div class="container-fluid text-center" style="background-color: #712cf9; color: white; padding: 100px">
 
     <div class="row">
-      <div class="col-lg-6" >
+      <div class="col-lg-6">
         <img src="/homelogo.svg" class="img-fluid" height="160" width="160" style="transform: rotate(45deg)"
           alt="StockWasp logo" />
 
@@ -53,9 +58,9 @@
           StockWasp
         </h1>
         <p style="max-width: 650px; font-size: 18px;" class="mx-auto mb-5">
-          StockWasp is the place to get all your stock information fast without being bombarded with ads and
-          trackers. Get real-time stock price data and news for any security traded on the NASDAQ, NYSE, and OTC
-          markets.
+          StockWasp is the place to get all your stock prices, and charts fast with accurate real-time data. Browse through
+          thousands of insider trading records and discover the biggest gainers and losers for every trading day,
+          including companies from NYSE, NASDAQ, and EURONEXT markets.
         </p>
       </div>
       <div class="col-lg-6" style="padding-top: 150px;">
@@ -70,17 +75,16 @@
                 </svg> Browse Stocks</div>
             </a>
             <a href="/insider" title="Discover all recent insider trading records filed with SEC">
-              <div class="btn mb-5" role="button" style="background-color: white; color: #712cf9; font-size: 17px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-              </svg>Insider Trading</div>
+              <div class="btn mb-5" role="button" style="background-color: white; color: #712cf9; font-size: 17px;"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                </svg>Insider Trading</div>
             </a>
           </div>
       </div>
     </div>
-
-
-
-
 
 
 
@@ -93,76 +97,70 @@
 
 
 
-
-
-
-
-
-
-
-    <div class="row" style="margin-top: 50px; margin-bottom: 150px;">
+    <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
       <div class="col-md-4 p-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#712cf9"
+        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="#712cf9"
           class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
           <path
             d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
         </svg>
         <h2>Fast</h2>
-        <p>This site was built with Express.js, which means it's fast and can handle thousands of requests
-          simultaneously</p>
+        <p style="font-size: 18px; margin-top: 15px;">Minimalistic design and lighweight servers can handle thousands of requests simultaneously</p>
       </div>
       <div class="col-md-4 p-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#712cf9" class="bi bi-lock-fill"
+        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="#712cf9" class="bi bi-lock-fill"
           viewBox="0 0 16 16">
           <path
             d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
         </svg>
         <h2>Secure</h2>
-        <p>All connections are automatically upgraded to HTTPS to ensure privacy and encryption</p>
+        <p style="font-size: 18px; margin-top: 15px;">All connections are automatically upgraded to HTTPS to ensure privacy and encryption</p>
       </div>
       <div class="col-md-4 p-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#712cf9" class="bi bi-search"
+        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="#712cf9" class="bi bi-search"
           viewBox="0 0 16 16">
           <path
             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
         </svg>
         <h2>Accurate</h2>
-        <p>All stock data is pulled in real-time, featuring second-to-second coverage of the market</p>
+        <p style="font-size: 18px; margin-top: 15px;">All stock data is pulled on each request, featuring second-to-second coverage of the market</p>
       </div>
     </div>
 
-    <p class="mt-5">Featuring stocks from companies such as</p>
+    <hr>
+
+    <p class="mt-5 mb-5">Featuring stocks from companies such as</p>
     <div class="row">
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/mcd" title="McDonalds' stock"><img src="/homepage-logos/mcdonalds.svg" width="50" height="50"
             alt="McDonalds logo" /></a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/goog" title="Google stock">
           <img src="/homepage-logos/google.svg" width="50" height="50" alt="Google logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/aapl" title="Apple stock">
           <img src="/homepage-logos/apple.svg" width="50" height="50" alt="Apple logo" />
         </a>
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/ko" title="Coca Cola stock">
 
           <img src="/homepage-logos/coke.svg" width="50" height="50" alt="Coca Cola logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/snap" title="Snapchat stock">
           <img src="/homepage-logos/snapchat.svg" width="50" height="50" alt="Snapchat logo" />
         </a>
 
       </div>
-      <div class="col m-1 pt-2">
+      <div class="col-3 mt-3">
         <a href="/stock/meta" title="Meta stock">
           <img src="/homepage-logos/meta.svg" width="50" alt="Meta logo" />
         </a>
@@ -170,64 +168,69 @@
       </div>
 
 
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/nke" title="Nike stock">
           <img src="/homepage-logos/nike.svg" width="50" height="50" alt="Nike logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/ups" title="UPS stock">
 
           <img src="/homepage-logos/ups.svg" width="50" height="50" alt="UPS logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/nflx" title="Netflix stock">
 
           <img src="/homepage-logos/netflix.svg" width="50" height="50" alt="Netflix logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/v" title="Visa stock">
           <img src="/homepage-logos/visa.svg" width="50" height="50" alt="Visa logo" />
         </a>
 
       </div>
 
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/gpro" title="GoPro stock">
           <img src="/homepage-logos/gopro.svg" width="50" height="50" alt="GoPro logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/ma" title="Mastercard stock">
           <img src="/homepage-logos/mastercard.svg" width="50" height="50" alt="Mastercard logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/pypl" title="PayPal stock">
           <img src="/homepage-logos/paypal.svg" width="50" height="50" alt="PayPal logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/shell.as" title="Shell plc stock">
           <img src="/homepage-logos/shell.svg" width="50" height="50" alt="Shell logo" />
         </a>
 
       </div>
-      <div class="col m-1">
+      <div class="col-3">
         <a href="/stock/amzn" title="Amazon stock">
           <img src="/homepage-logos/amazon.svg" width="50" height="50" alt="Amazon logo" />
         </a>
 
       </div>
+      <div class="col-3">
+        <a href="/stock/tsla" title="Tesla stock">
+          <img src="/homepage-logos/tesla.svg" width="50" height="50" alt="Tesla logo" />
+        </a>
 
+      </div>
     </div>
 
 
