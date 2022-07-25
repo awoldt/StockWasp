@@ -3,10 +3,10 @@
 
   <div class="row">
     <% data.map(x=> { %>
-      <div class="related_stock_col">
-        <a href="/stock/<%= x.ticker.toLowerCase() %>" style="text-decoration: none; color: black">
-          <div class="card m-2 related_stock_card" style="display: inline-block; width: 300px; height: 180px" itemScope
-            itemType="https://schema.org/Corporation">
+      <div class="related_stock_col" itemScope
+      itemType="https://schema.org/Corporation">
+        <a href="/stock/<%= x.ticker.toLowerCase() %>" style="text-decoration: none; color: black" itemprop="sameAs">
+          <div class="card m-2 related_stock_card" style="display: inline-block; width: 300px; height: 180px" >
             <div class="card-body">
               <% if (x.logo !==null) { %>
                 <img src="<%= x.logo %>" style="width: 45px; height: 45px" alt="<%= x.name %> logo" itemprop="logo" />
