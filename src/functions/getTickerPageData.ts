@@ -4,6 +4,7 @@ import ALL_DATA from "../interfaces/ALL_DATA";
 import company_profile from "../interfaces/company_profile";
 import company_quote from "../interfaces/company_quote";
 import related_stock from "../interfaces/related_stocks";
+import getSameAs from "./getSameAsLinks";
 
 function shuffleArray(array: any[]) {
   for (var i = array.length - 1; i > 0; i--) {
@@ -243,6 +244,8 @@ export default async function PROCESS_QUERY(ticker: string) {
     const STOCKMARKETHOURS = await isStockMarketOpen();
     const IMPORTANTPEOPLE = await getImportantPeople(ticker);
 
+    const SAMEASDATA: string | null = await getSameAs(ticker);
+
     //type ALL_DATA in interface folder
     const returnData: ALL_DATA = {
       companyProfile: COMPANYPROFILE,
@@ -253,6 +256,7 @@ export default async function PROCESS_QUERY(ticker: string) {
       companyCoreInfo: COMPANYCOREINFO,
       isStockMarketOpen: STOCKMARKETHOURS,
       importantPeople: IMPORTANTPEOPLE,
+      sameAsLinks: SAMEASDATA! ? SAMEASDATA : null,
     };
 
     return returnData;

@@ -170,6 +170,9 @@
                             <% } %>
                       </div>
                     </div>
+                    <% if (stock_data.sameAsLinks !== null) { %>
+                     <p class="mt-3 text-secondary">Find more information about <%= stock_data.companyProfile.name%> <a href="<%= stock_data.sameAsLinks %>" target="_blank" rel="noreferrer" title="Read more about <%= stock_data.companyProfile.name %> on Wikipedia" itemprop="sameAs">here</a></p>
+                    <% } %>
               </div>
 
               <div class="col col-lg-8" style="margin-top: 100px">

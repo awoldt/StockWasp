@@ -27,4 +27,5 @@ export default interface ALL_DATA {
   companyCoreInfo: core_info | null;
   isStockMarketOpen: boolean | null;
   importantPeople: imporant_people[] | null;
+  sameAsLinks: string | null;
 }
