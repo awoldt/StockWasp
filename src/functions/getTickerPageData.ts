@@ -114,7 +114,7 @@ async function getRelatedStocks(
         sector +
         "&exchange=" +
         exchange +
-        "&limit=50&apikey=" +
+        "&limit=40&apikey=" +
         process.env.STOCK_API_KEY
     );
     //get all tickers from screener
@@ -250,10 +250,8 @@ export default async function PROCESS_QUERY(ticker: string) {
     const COMPANYCOREINFO = await getCompanyCoreData(ticker);
     const STOCKMARKETHOURS = await isStockMarketOpen();
     const IMPORTANTPEOPLE = await getImportantPeople(ticker);
-
     const SAMEASDATA: string | null = await getSameAs(ticker);
 
-    //type ALL_DATA in interface folder
     const returnData: ALL_DATA = {
       companyProfile: COMPANYPROFILE,
       companyQuote: COMPANYQUOTE,

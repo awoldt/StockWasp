@@ -51,20 +51,16 @@ async function getRelatedStocks(ticker: string, sector: string) {
       return x !== null;
     });
 
-
     const y: any = ALLCOMPANYDATA;
     //only send back company profile data needed (related_stock interface)
-    const returnData: related_stock[] = y.map(
-      (stock: any) => {
-        return {
-          name: stock.companyName,
-          ticker: stock.symbol,
-          logo: stock.image,
-          exchange: stock.exchangeShortName,
-          
-        };
-      }
-    );
+    const returnData: related_stock[] = y.map((stock: any) => {
+      return {
+        name: stock.companyName,
+        ticker: stock.symbol,
+        logo: stock.image,
+        exchange: stock.exchangeShortName,
+      };
+    });
 
     return returnData;
   } catch (e) {
@@ -72,7 +68,6 @@ async function getRelatedStocks(ticker: string, sector: string) {
     return null;
   }
 }
-
 
 async function getInsiderReports(symbol: String) {
   try {
@@ -176,8 +171,13 @@ async function getCompanyProfile(symbol: string) {
 
 export default async function processQuery(symbol: string) {
   const INSIDERREPORTS: any = await getInsiderReports(symbol);
-  const COMPANYPROFILE: company_profile | null = await getCompanyProfile(symbol);
-  const RELATEDSTOCKS: any[] | null = await getRelatedStocks(COMPANYPROFILE!.symbol!, COMPANYPROFILE!.sector!);
+  const COMPANYPROFILE: company_profile | null = await getCompanyProfile(
+    symbol
+  );
+  const RELATEDSTOCKS: any[] | null = await getRelatedStocks(
+    COMPANYPROFILE!.symbol!,
+    COMPANYPROFILE!.sector!
+  );
   //could not get insider info
   if (INSIDERREPORTS == null) {
     return null;
@@ -186,7 +186,7 @@ export default async function processQuery(symbol: string) {
       insider_reports: INSIDERREPORTS[0],
       company_profile: COMPANYPROFILE,
       ordered_trades: INSIDERREPORTS[1],
-      related_stocks: RELATEDSTOCKS
+      related_stocks: RELATEDSTOCKS,
     };
 
     return returnData;

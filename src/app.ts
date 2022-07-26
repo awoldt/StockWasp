@@ -48,8 +48,8 @@ app.get("/stock/:ticker", async (req, res) => {
     //if stock data or companyprofile are null, 404
     //only need companyProfile to send back data
     //send 404
-    if (StockData == null || StockData.companyProfile == null) {
-      res.status(404).send("page not found :(");
+    if (StockData == null || StockData.companyProfile == null || StockData.companyQuote == null) {
+      res.status(404).send("could not get stock data :(");
     }
     //200
     else {
