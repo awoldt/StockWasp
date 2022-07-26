@@ -14,5 +14,7 @@
     "pypl=https://en.wikipedia.org/wiki/PayPal",
     "shell.as=https://en.wikipedia.org/wiki/Shell_plc",
     "amzn=https://en.wikipedia.org/wiki/Amazon_(company)",
-    "tsla=https://en.wikipedia.org/wiki/Tesla,_Inc."
+    "tsla=https://en.wikipedia.org/wiki/Tesla,_Inc.",
+    "googl=https://en.wikipedia.org/wiki/Alphabet_Inc.",
+    "hd=https://en.wikipedia.org/wiki/The_Home_Depot"
 ]

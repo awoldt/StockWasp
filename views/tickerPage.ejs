@@ -18,7 +18,6 @@
     content="Discover <%= stock_data.companyProfile.name %>'s stock price today along with 30 day chart" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://stockwasp.com/stock/<%= stock_data.companyProfile.symbol.toLowerCase() %>" />
-  <!-- Twitter Meta Tags. -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:url"
     content="https://stockwasp.com/stock/<%= stock_data.companyProfile.symbol.toLowerCase() %>" />
@@ -115,7 +114,6 @@
         <% if (stock_data !==null && stock_data.companyProfile !==null) { %>
           <div itemScope itemType="https://schema.org/Corporation">
             <div class="row">
-              <!--stock price and company profile-->
               <div class="col col-lg-4">
                 <% if (stock_data.companyProfile.image !==null) { %>
                   <img itemprop="logo" src="<%= stock_data.companyProfile.image %>"

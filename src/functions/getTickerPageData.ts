@@ -103,12 +103,18 @@ async function getPriceHistory(ticker: string) {
   }
 }
 
-async function getRelatedStocks(ticker: string, sector: string) {
+async function getRelatedStocks(
+  ticker: string,
+  sector: string,
+  exchange: string
+) {
   try {
     const data = await axios.get(
       "https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
         sector +
-        "&exchange=NYSE,NASDAQ&limit=25&apikey=" +
+        "&exchange=" +
+        exchange +
+        "&limit=50&apikey=" +
         process.env.STOCK_API_KEY
     );
     //get all tickers from screener
@@ -237,7 +243,8 @@ export default async function PROCESS_QUERY(ticker: string) {
     const PRICEHISTORY = await getPriceHistory(ticker);
     const RELATEDSTOCKS = await getRelatedStocks(
       ticker,
-      COMPANYPROFILE!.sector!
+      COMPANYPROFILE!.sector!,
+      COMPANYPROFILE!.exchange!
     );
     const STOCKNEWS = await getStockNews(ticker);
     const COMPANYCOREINFO = await getCompanyCoreData(ticker);
