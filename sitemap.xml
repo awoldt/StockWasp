@@ -2,6 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
+    <loc>https://stockwasp.com</loc>
+  </url>
+  <url>
+    <loc>https://stockwasp.com/stock</loc>
+  </url>
+  <url>
+    <loc>https://stockwasp.com/insider</loc>
+  </url>
+  <url>
+    <loc>https://stockwasp.com/privacy</loc>
+  </url>
+  <url>
     <loc>https://stockwasp.com/stock/a</loc>
   </url>
   <url>
