@@ -120,20 +120,23 @@ async function getRelatedStocks(
     //get all tickers from screener
     //cannot be same as current ticker page stock
     //company name cannot be more than 25 characters
-    let tickers = data.data.filter((stock: any) => {
-      return (
-        stock.symbol !== ticker.toUpperCase() && stock.companyName.length < 27
-      );
-    });
+    let tickers = data.data
+      .filter((stock: any) => {
+        if (
+          stock.symbol !== ticker.toUpperCase() &&
+          stock.companyName.length < 27
+        ) {
+          return stock.symbol;
+        }
+      })
+      .slice(0, 9);
 
-    let ticks = tickers.map((x: any) => {
-      return x.symbol;
-    });
-
-    shuffleArray(ticks);
-    //only search for 8 company profiles
-    ticks.length = 8;
-    let allTickersString = ticks.join(",").slice(0, -1);
+    shuffleArray(tickers);
+    let allTickersString = tickers
+      .map((x: any) => {
+        return x.symbol;
+      })
+      .join(",");
 
     let ALLCOMPANYDATA = await axios.get(
       "https://financialmodelingprep.com/api/v3/profile/" +
@@ -145,7 +148,6 @@ async function getRelatedStocks(
     ALLCOMPANYDATA = ALLCOMPANYDATA.data.filter((x: any) => {
       return x !== null;
     });
-    //only send back company profile data needed (related_stock interface)
     const returnData: related_stock[] = ALLCOMPANYDATA.map((stock: any) => {
       return {
         name: stock.companyName,
@@ -184,6 +186,8 @@ async function getStockNews(ticker: any) {
 }
 
 async function getCompanyCoreData(ticker: any) {
+  //the only purpose of this function is to get company
+  //tax ID and sicCode
   try {
     const data = await axios.get(
       "https://financialmodelingprep.com/api/v4/company-core-information?symbol=" +
@@ -192,12 +196,9 @@ async function getCompanyCoreData(ticker: any) {
         process.env.STOCK_API_KEY
     );
 
-    let y = {
-      sicCode: data.data[0].sicCode,
+    return {
       taxID: data.data[0].taxIdentificationNumber,
     };
-
-    return y;
   } catch (e) {
     console.log("could not get company core data :(");
     return null;
@@ -247,7 +248,7 @@ export default async function PROCESS_QUERY(ticker: string) {
       COMPANYPROFILE!.exchange!
     );
     const STOCKNEWS = await getStockNews(ticker);
-    const COMPANYCOREINFO = await getCompanyCoreData(ticker);
+    const COMPANYCOREDATA = await getCompanyCoreData(ticker);
     const STOCKMARKETHOURS = await isStockMarketOpen();
     const IMPORTANTPEOPLE = await getImportantPeople(ticker);
     const SAMEASDATA: string | null = await getSameAs(ticker);
@@ -258,7 +259,7 @@ export default async function PROCESS_QUERY(ticker: string) {
       historicalPrices: PRICEHISTORY,
       relatedStocks: RELATEDSTOCKS,
       stockNews: STOCKNEWS,
-      companyCoreInfo: COMPANYCOREINFO,
+      companyCoreInfo: COMPANYCOREDATA,
       isStockMarketOpen: STOCKMARKETHOURS,
       importantPeople: IMPORTANTPEOPLE,
       sameAsLinks: SAMEASDATA! ? SAMEASDATA : null,
