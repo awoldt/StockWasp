@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market Overview | StockWasp</title>
+  <link rel="stylesheet" href="/bootstrap.min.css" />
+  <script src="/bootstrap.min.js"></script>
+
+  <meta name="description" content="Stock coverage on all sectors of the economy along with the biggest gainers and losers in the market today" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://stockwasp.com/stock" />
+  <meta property="og:image" content="https://stockwasp.com/opengraph_logo.svg" />
+  <meta property="og:site_name" content="StockWasp" />
+  <meta property="og:title" content="Stock Market Today | StockWasp" />
+  <meta property="og:description" content="Discover market trends and the most popular stocks people are talking about" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stockwasp.com/stock" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://stockwasp.com/stock" />
+  <meta name="twitter:title" content="Market Overview | StockWasp" />
+  <meta name="twitter:description" content="Discover market trends and the most popular stocks people are talking about" />
+  <meta name="twitter:image" content="https://stockwasp.com/opengraph_logo.svg" />
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#ffffff" />
+  <%- include('./components/googleAnalytics.ejs') %>
+</head>
+
+<body>
+  <%- include('./components/Nav.ejs', {current_page: 'stock_page' }) %>
+  <div class="container pt-5">
+    <%- include('./components/Search.ejs') %>
+    <div class="text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="green" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-graph-down-arrow" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 11.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-1 0v2.6l-3.613-4.417a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61L13.445 11H10.5a.5.5 0 0 0-.5.5Z" />
+      </svg>
+    </div>
+
+    <h1 class="text-center">Market's Biggest Gainers and Losers</h1>
+    <p style="max-width: 500px;" class="mx-auto text-center">
+      <%= stock_data.gainLoss.gainers[0].name %> has today's most
+      significant gains with a
+      <span style="color: green"><svg style="margin-right: -5px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+        </svg>
+        <%= stock_data.gainLoss.gainers[0].changesPercentage.toFixed(2)
+          %>%</span>
+      increase in its stock price. <%= stock_data.gainLoss.losers[0].name %>
+      has the most significant drop with a total decrease of
+      <span style="color: red"><svg style="margin-right: -5px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+        </svg>
+        <%= stock_data.gainLoss.losers[0].changesPercentage.toFixed(2)
+          %>%</span>
+      for the day.
+    </p>
+    <div class="row mb-5 mt-5 text-center">
+
+      <div class="col-lg-6 mb-2">
+        <ul class="list-group">
+          <% stock_data.gainLoss.gainers.map(x=> { %>
+          <li class="list-group-item" style="background-color: rgb(0, 128, 0, 0.1)">
+            <div itemScope itemType="https://schema.org/Corporation">
+              <a href="/stock/<%= x.symbol.toLowerCase() %>" title="View <%= x.symbol %> stock price and news" style="text-decoration: none">
+                <span itemprop="legalName"> <%= x.name %> </span>(<span itemprop="tickerSymbol">
+                  <%= x.symbol %> </span>)
+              </a>
+              <span style="color: green; margin-left: 10px">+$<%= x.change.toFixed(2) %> (<%=
+                  x.changesPercentage.toFixed(2) %>%)</span>
+            </div>
+          </li>
+
+          <% }) %>
+        </ul>
+      </div>
+      <div class="col-lg-6">
+        <ul class="list-group">
+          <% stock_data.gainLoss.losers.map(x=> { %>
+          <li class="list-group-item" style="background-color: rgb(255, 0, 0, 0.1)">
+            <div itemScope itemType="https://schema.org/Corporation">
+              <a href="/stock/<%= x.symbol.toLowerCase() %>" title="View <%= x.symbol %> stock price and news" style="text-decoration: none">
+                <span itemprop="legalName"> <%= x.name %> </span>(<span itemprop="tickerSymbol">
+                  <%= x.symbol %> </span>)
+              </a>
+              <span style="color: red; margin-left: 10px">
+                <%= x.change.toFixed(2) %> (<%= x.changesPercentage.toFixed(2)
+                  %>%)
+              </span>
+            </div>
+          </li>
+
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+
+    <hr />
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-newspaper" viewBox="0 0 16 16">
+      <path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
+      <path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
+    </svg>
+
+
+    <h2 style="display: inline;">Market News</h2>
+
+    <% stock_data.generalNews.map(x => { %>
+    <div itemScope itemType="https://schema.org/NewsArticle" class="mt-3 mb-3">
+      <a style="text-decoration: none; color: black" href="<%= x.url %>" target="_blank" rel="noreferrer" itemprop="url">
+
+        <div class="row">
+          <div class="col-md-3">
+            <img src="<%= x.image %>" alt="<%= x.site %> article image" height="150" width="300" class="img-fluid" />
+          </div>
+          <div class="col-md-9">
+            <p style="font-size: 18px; font-family: 'Trebuchet MS', sans-serif" itemprop="headline">
+              <%= x.title %>
+            </p>
+
+            <span class="text-secondary" style="display: block">
+              <% if (x.url.split('youtube').length > 1) { %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
+                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+              </svg>
+              <% } else { %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-newspaper" viewBox="0 0 16 16">
+                <path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
+                <path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
+              </svg>
+              <% } %>
+              <span itemprop="author" itemscope itemtype="https://schema.org/Organization">
+                <span itemprop="name"><% if (x.url.split('youtube').length > 1) { %> YouTube <% }
+                  else { %> <%= x.site %> <% } %></span>
+              </span>
+              &#183;
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
+                <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+              </svg>
+              <span itemprop="datePublished">
+                <%= x.publishedDate.split(' ')[0]%></span>
+            </span>
+            <p><%= x.text %></p>
+          </div>
+
+        </div>
+
+
+
+      </a>
+    </div>
+
+
+    <% }) %>
+
+
+    <footer>
+      <p class="text-secondary mt-5" style="font-size: 14px">
+        Data provided by
+        <a style="text-decoration: none; color: inherit" title="FMP Developer Documentation" href="https://financialmodelingprep.com/developer/docs/" target="_blank" rel="noreferrer">Financial Modeling Prep
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="inherit" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+          </svg></a><br />This site is not intended for financial advice. Invest at your
+        own risk.
+      </p>
+      <p class="text-secondary mb-5" style="font-size: 14px; max-width: 600px">
+        All trademarks, logos, and brand names are the property of their
+        respective owners. All company, product, and service names used in
+        this website are for identification and informational purposes only.
+        Use of these names, trademarks, and brands does not imply endorsement.
+      </p>
+    </footer>
+  </div>
+</body>
+
+</html>

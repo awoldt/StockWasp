@@ -3,7 +3,6 @@ require("dotenv").config();
 import express from "express";
 const app = express();
 import path from "path";
-import axios from "axios";
 import ALL_DATA from "./interfaces/ALL_DATA";
 import getMarketOverviewData from "./functions/getMarketOverviewData";
 import getTickerPageData from "./functions/getTickerPageData";
@@ -11,6 +10,7 @@ import compression from "compression";
 import getInsiderInfo from "./functions/getInsiderInfo";
 import ALL_INSIDER_DATA from "./interfaces/ALL_INSIDER_DATA";
 import getInsiderHomepageInfo from "./functions/getInsiderHomepageInfo";
+import market_overview from "./interfaces/market_overview";
 
 app.set("view engine", "ejs");
 
@@ -29,8 +29,8 @@ app.get("/", (req, res) => {
 
 app.get("/stock", async (req, res) => {
   try {
-    const data = await getMarketOverviewData();
-    res.status(200).render("stockPage", {
+    const data: market_overview | null = await getMarketOverviewData();
+    res.status(200).render("marketPage", {
       stock_data: data,
     });
   } catch (e) {
@@ -48,7 +48,11 @@ app.get("/stock/:ticker", async (req, res) => {
     //if stock data or companyprofile are null, 404
     //only need companyProfile to send back data
     //send 404
-    if (StockData == null || StockData.companyProfile == null || StockData.companyQuote == null) {
+    if (
+      StockData == null ||
+      StockData.companyProfile == null ||
+      StockData.companyQuote == null
+    ) {
       res.status(404).send("could not get stock data :(");
     }
     //200
@@ -59,26 +63,6 @@ app.get("/stock/:ticker", async (req, res) => {
     }
   } catch (e) {
     res.status(404).send("stock does not exist :(");
-  }
-});
-
-app.get("/random", async (req, res) => {
-  try {
-    const data = await axios.get(
-      "https://financialmodelingprep.com/api/v3/stock-screener?sector=" +
-        req.query.sector +
-        "&limit=500&apikey=" +
-        process.env.STOCK_API_KEY
-    );
-    res.redirect(
-      "/stock/" +
-        data.data[
-          Math.floor(Math.random() * data.data.length)
-        ].symbol.toLowerCase()
-    );
-  } catch (e) {
-    console.log("error fetching random stock by sector :(");
-    res.redirect("/stock");
   }
 });
 
@@ -98,9 +82,7 @@ app.get("/insider/:ticker", async (req, res) => {
   const data: ALL_INSIDER_DATA | null = await getInsiderInfo(req.params.ticker);
 
   if (data == null) {
-    res
-      .status(404)
-      .send("error getting insider information :(");
+    res.status(404).send("error getting insider information :(");
   } else {
     res.render("insider", {
       insider_data: data,

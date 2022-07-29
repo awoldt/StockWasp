@@ -16,5 +16,8 @@
     "amzn=https://en.wikipedia.org/wiki/Amazon_(company)",
     "tsla=https://en.wikipedia.org/wiki/Tesla,_Inc.",
     "googl=https://en.wikipedia.org/wiki/Alphabet_Inc.",
-    "hd=https://en.wikipedia.org/wiki/The_Home_Depot"
+    "hd=https://en.wikipedia.org/wiki/The_Home_Depot",
+    "sbux=https://en.wikipedia.org/wiki/Starbucks",
+    "zm=https://en.wikipedia.org/wiki/Zoom_Video_Communications",
+    "msft=https://en.wikipedia.org/wiki/Microsoft"
 ]

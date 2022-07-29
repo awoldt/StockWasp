@@ -21,10 +21,24 @@ async function getGainersAndLosers() {
   }
 }
 
+async function getGeneralNews() {
+  try {
+    const data = await axios.get(
+      "https://financialmodelingprep.com/api/v3/stock_news?limit=12&apikey=" +
+        process.env.STOCK_API_KEY
+    );
+    return data.data;
+  } catch (e) {
+    console.log("could not get general news :(");
+  }
+}
+
 export default async function PROCESS_DATA() {
   const GAINLOSSDATA = await getGainersAndLosers();
+  const GENERALNEWS = await getGeneralNews();
 
   return {
     gainLoss: GAINLOSSDATA,
+    generalNews: GENERALNEWS,
   };
 }

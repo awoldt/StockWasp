@@ -118,6 +118,8 @@ async function getInsiderReports(symbol: String) {
               ? x.typeOfOwner.split("officer: ")[1]
               : x.typeOfOwner == "director"
               ? "Director"
+              : x.typeOfOwner.split("other: ").length > 1
+              ? x.typeOfOwner.split("other: ")[1]
               : x.typeOfOwner,
           form_type: x.formType,
           securities_owned: x.securitiesOwned,
